@@ -1,0 +1,6 @@
+.import/
+.directory
+
+# Requiere el plugin Persistence
+# https://github.com/MatiasVME/Persistence
+addons/PersistenceNode/

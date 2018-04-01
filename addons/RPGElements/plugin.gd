@@ -1,0 +1,11 @@
+tool
+extends EditorPlugin
+
+func _enter_tree():
+#	add_custom_type("Persistence", "Node", preload("persistence_node.gd"), preload("icon.png"))
+	# add_autoload_singleton(name, path) # 3.1
+	pass
+
+func _exit_tree():
+#	remove_custom_type("Persistence")
+	pass
