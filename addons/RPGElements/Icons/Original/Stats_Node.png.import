@@ -2,12 +2,12 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/icon.png-487276ed1e3a0c39cad0279d744ee560.stex"
+path="res://.import/Stats_Node.png-1158e3f1a4d9348330055fe89be19c6f.stex"
 
 [deps]
 
-source_file="res://icon.png"
-dest_files=[ "res://.import/icon.png-487276ed1e3a0c39cad0279d744ee560.stex" ]
+source_file="res://addons/RPGElements/Icons/Original/Stats_Node.png"
+dest_files=[ "res://.import/Stats_Node.png-1158e3f1a4d9348330055fe89be19c6f.stex" ]
 
 [params]
 
