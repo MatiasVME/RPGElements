@@ -39,6 +39,13 @@ func add_item(item):
 		TYPE_BY_WEIGHT:
 			add_item_by_weight(item)
 
+# Obtiene un item y lo elimina del inventario
+func take_item(item_name):
+	pass
+
+func remove_item(item_name):
+	pass
+
 # Setters/Getters
 #
 
@@ -48,7 +55,7 @@ func set_serialized(dict):
 func get_serialized():
 	pass
 
-func get_item():
+func get_item(item_name):
 	pass
 	
 # Métodos "Privados"

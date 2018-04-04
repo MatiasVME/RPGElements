@@ -27,15 +27,31 @@ var player_name
 # Inventario/s asigando/s a el player
 var inv = []
 
-# Opcionales
-var level
+# Todos los player tienen stats
+var stats = preload("RPGStats_node.gd").new() 
+
+var level = 0
 var level_max = 30
 
-var xp
-var xp_required = []
+var xp = 0
+# En xp_required 0 equivale a level 1
+var xp_required = [] setget , get_xp_required
+
+signal level_up
+signal get_xp
 
 func _ready():
 	create_default_xp_curve()
+	
+	# Signals
+	connect("level_up", self, "_on_level_up")
+	connect("get_xp", self, "_on_get_xp")
+
+func _on_level_up():
+	debug("Level Up!!: ", level)
+	
+func _on_get_xp():
+	debug("Get XP")
 
 # Métodos Públicos
 #
@@ -43,19 +59,47 @@ func _ready():
 func create_default_xp_curve(base_xp = 20.4, exponent = 1.05):
 	xp_required.clear()
 	
-	for i in range(1, level_max):
+	for i in range(1, level_max + 1):
 		xp_required.append(int(round(base_xp * (pow(float(i), exponent)))))
 	
 	debug(xp_required)
+
+# Añade xp y sube de nivel si es necesario
+func add_xp(_xp):
+	if _xp > 0:
+		emit_signal("get_xp")
 	
+	var i = xp
+	while(i < xp + _xp):
+		if level >= level_max:
+			break
+		
+		if xp + _xp >= xp_required[level]:
+			if i != 0:
+				i += xp_required[level] - xp_required[level - 1]
+			else:
+				i += xp_required[level]
+				
+			level += 1
+			emit_signal("level_up")
+			
+	xp += _xp
+	debug(xp)
+	
+func remove_xp(_xp):
+	pass
+
 # Setters/Getters
 #
 
 func set_serialized(dict):
 	pass
-	
+
 func get_serialized():
 	pass
+
+func get_xp_required():
+	return xp_required
 
 # Métodos "Privados"
 #

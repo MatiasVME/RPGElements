@@ -23,11 +23,20 @@
 tool
 extends "RPGElement.gd"
 
+var stats = []
+
 # Métodos Públicos
 #
 
+func add_stat(stat_name, points):
+	stats.append([stat_name, points])
+
 # Setters/Getters
 #
+
+func get_stat(stat_name):
+	for i in range(0, stats.size()):
+		pass # TODO
 
 func set_serialized(dict):
 	pass

@@ -27,3 +27,6 @@ export (bool) var debug = true
 func debug(message, something1 = "", something2 = ""):
 	if debug:
 		print("[RPGElements] ", message, " ", something1, " ", something2)
+
+func _private(val = null):
+	debug("Acceso de escritura/lectura es privado")

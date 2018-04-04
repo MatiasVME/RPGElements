@@ -23,15 +23,25 @@
 tool
 extends "RPGElement.gd"
 
+var item_name
+var description
+
+# Opcionales
+var weight = 0
+var atributes = []
+
 # Métodos Públicos
 #
+
+func add_atribute(atribute_name, value):
+	atributes.append([atribute_name, value])
 
 # Setters/Getters
 #
 
 func set_serialized(dict):
 	pass
-	
+
 func get_serialized():
 	pass
 
