@@ -24,9 +24,14 @@ extends Node
 
 export (bool) var debug = true
 
+var Persistence
+
+func _ready():
+	Persistence = load("res://addons/PersistenceNode/persistence_node.gd").new()
+
 func debug(message, something1 = "", something2 = ""):
 	if debug:
 		print("[RPGElements] ", message, " ", something1, " ", something2)
 
-func _private(val = null):
-	debug("Acceso de escritura/lectura es privado")
+#func _private(val = null):
+#	debug("Acceso de escritura/lectura es privado")

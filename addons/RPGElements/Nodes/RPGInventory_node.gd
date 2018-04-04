@@ -41,7 +41,10 @@ func add_item(item):
 
 # Obtiene un item y lo elimina del inventario
 func take_item(item_name):
-	pass
+	for i in range(0, inv.size()):
+		pass
+	
+	var item_taken
 
 func remove_item(item_name):
 	pass

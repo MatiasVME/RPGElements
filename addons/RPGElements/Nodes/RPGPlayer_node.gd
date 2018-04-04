@@ -23,7 +23,7 @@
 tool
 extends "RPGElement.gd"
 
-var player_name
+var player_name setget set_player_name, get_player_name
 # Inventario/s asigando/s a el player
 var inv = []
 
@@ -41,6 +41,8 @@ signal level_up
 signal get_xp
 
 func _ready():
+	see_children()
+	
 	create_default_xp_curve()
 	
 	# Signals
@@ -82,6 +84,8 @@ func add_xp(_xp):
 				
 			level += 1
 			emit_signal("level_up")
+		else:
+			break
 			
 	xp += _xp
 	debug(xp)
@@ -89,6 +93,15 @@ func add_xp(_xp):
 func remove_xp(_xp):
 	pass
 
+# Ve los hijos del nodo player para saber si contine algún Nodo de:
+# RPGInventory o Stats
+func see_children():
+#	print(get_children())
+	
+	for i in get_children():
+		print("Si lo es!!! ", i.get_class())
+		
+	pass
 # Setters/Getters
 #
 
@@ -100,6 +113,12 @@ func get_serialized():
 
 func get_xp_required():
 	return xp_required
+
+func set_player_name(_player_name):
+	player_name = _player_name
+	
+func get_player_name():
+	return player_name
 
 # Métodos "Privados"
 #

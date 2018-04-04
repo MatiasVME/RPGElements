@@ -14,6 +14,10 @@ config/name="RPGElements"
 run/main_scene="res://Main.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+Persistence="*res://Examples/Persistence.tscn"
+
 [editor_plugins]
 
 enabled=PoolStringArray( "PersistenceNode", "RPGElements" )
