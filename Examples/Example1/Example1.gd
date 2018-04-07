@@ -7,7 +7,7 @@ func _ready():
 	
 	$Pedro.player_name = "Pedro"
 	
-	# Se obtiene la data del jugador si es que esta almacenada a travez
+	# Se obtiene la data del jugador si es que esta almacenada a travéz
 	# del PersistenceNode 
 	var player_data = Persistence.get_data($Pedro.player_name)
 	
@@ -18,9 +18,18 @@ func _ready():
 	$Pedro.add_xp(10)
 	$Pedro.add_xp(1)
 
+	# Se le pone un nombre al inventario para poder identificarlo,
+	# ya que puede haber más de un inventario.
+	$Pedro/Inv.inv_name = "PlayerInventory"
+	# Le asigna un peso máximo de 40 entre todos los items no pueden
+	# superar ese peso.
+	$Pedro/Inv.max_weight = 40
+	# Se añade el inventario al player Pedro.
+	$Pedro.add_inv($Pedro/Inv)
+
 	# Se almacena en el diccionario de pedro, la data serializada de
 	# pedro.
-#	player_data["PlayerData"] = $Pedro.get_serialized()
+	player_data["PlayerData"] = $Pedro.get_serialized()
 
 	# Siempre es importante guardar la data en disco.
-#	Persistence.save_data($Pedro.player_name)
+	Persistence.save_data($Pedro.player_name)

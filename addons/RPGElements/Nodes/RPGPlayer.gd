@@ -28,7 +28,7 @@ var player_name setget set_player_name, get_player_name
 var inv = []
 
 # Todos los player tienen stats
-var stats = preload("RPGStats_node.gd").new() 
+var stats = preload("RPGStats.gd").new() 
 
 var level = 0
 var level_max = 30
@@ -41,8 +41,6 @@ signal level_up
 signal get_xp
 
 func _ready():
-	see_children()
-	
 	create_default_xp_curve()
 	
 	# Signals
@@ -91,17 +89,17 @@ func add_xp(_xp):
 	debug(xp)
 	
 func remove_xp(_xp):
+	if xp - _xp >= 0:
+		xp -= _xp
+	else:
+		xp = 0
+
+func add_inv(_inv):
+	inv.append(_inv)
+
+func remove_inv(inv_name):
 	pass
 
-# Ve los hijos del nodo player para saber si contine algún Nodo de:
-# RPGInventory o Stats
-func see_children():
-#	print(get_children())
-	
-	for i in get_children():
-		print("Si lo es!!! ", i.get_class())
-		
-	pass
 # Setters/Getters
 #
 
@@ -119,6 +117,12 @@ func set_player_name(_player_name):
 	
 func get_player_name():
 	return player_name
+	
+func get_inv(index):
+	return inv[index]
+
+func get_all_inv():
+	return inv
 
 # Métodos "Privados"
 #

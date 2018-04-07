@@ -30,24 +30,31 @@ enum Type {TYPE_BY_WEIGHT}
 export (Type) var type = TYPE_BY_WEIGHT
 
 var inv = []
+var inv_name = "" setget set_inv_name, get_inv_name
+
+var max_weight = 20
+var current_weight = 0
 
 # Métodos Públicos
 #
 
+# Añade un item y retorna verdadero si lo puede añadir, si no puede retorna
+# false.
 func add_item(item):
 	match type:
 		TYPE_BY_WEIGHT:
-			add_item_by_weight(item)
+			return add_item_by_weight(item)
 
 # Obtiene un item y lo elimina del inventario
 func take_item(item_name):
-	for i in range(0, inv.size()):
-		pass
-	
-	var item_taken
+	match type:
+		TYPE_BY_WEIGHT:
+			return take_item_by_weight(item_name)
 
 func remove_item(item_name):
-	pass
+	match type:
+		TYPE_BY_WEIGHT:
+			remove_item_by_weight(item_name)
 
 # Setters/Getters
 #
@@ -61,8 +68,27 @@ func get_serialized():
 func get_item(item_name):
 	pass
 	
+func set_inv_name(_inv_name):
+	inv_name = _inv_name
+	
+func get_inv_name():
+	return inv_name
+	
 # Métodos "Privados"
 #
 
 func add_item_by_weight(item):
+	if current_weight + item.weight <= max_weight:
+		inv.append(item)
+		current_weight += item.weight
+		
+		return true
+		
+	return false
+
+func take_item_by_weight(item_name):
+	return 99 # Nada
+	pass
+	
+func remove_item_by_weight(item_name):
 	pass
