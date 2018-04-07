@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/RPGElementsFull.png-9f52d133ffeed50ebf0ffa9875253e74.stex"
+path="res://.import/Stats.png-1cd66c9f0dc0760427df6e25214d4ac6.stex"
 
 [deps]
 
-source_file="res://addons/RPGElements/Icons/Original/RPGElementsFull.png"
-source_md5="5728cf311b521b1cf07720bae2610124"
+source_file="res://addons/RPGElements/Icons/Original/Stats.png"
+source_md5="80dc9ecb84e4434dc94d96a2a2965d80"
 
-dest_files=[ "res://.import/RPGElementsFull.png-9f52d133ffeed50ebf0ffa9875253e74.stex" ]
-dest_md5="65d967160f9a90f09fe8a9c2c2118180"
+dest_files=[ "res://.import/Stats.png-1cd66c9f0dc0760427df6e25214d4ac6.stex" ]
+dest_md5="16b2ec4759b2c17f82c652b84aae722d"
 
 [params]
 
