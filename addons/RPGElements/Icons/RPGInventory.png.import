@@ -7,10 +7,7 @@ path="res://.import/RPGInventory.png-d29eddfd9d7d195c654901aad15f43fe.stex"
 [deps]
 
 source_file="res://addons/RPGElements/Icons/RPGInventory.png"
-source_md5="dc77ec1447419edca633e425a3d0c0c4"
-
 dest_files=[ "res://.import/RPGInventory.png-d29eddfd9d7d195c654901aad15f43fe.stex" ]
-dest_md5="bed3c938676ddaa701703c12fef93925"
 
 [params]
 

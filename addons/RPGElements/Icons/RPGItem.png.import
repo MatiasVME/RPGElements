@@ -7,10 +7,7 @@ path="res://.import/RPGItem.png-64019388d5d160a6a8c4f329772123c1.stex"
 [deps]
 
 source_file="res://addons/RPGElements/Icons/RPGItem.png"
-source_md5="3be82fc210717a31349276b8678905f6"
-
 dest_files=[ "res://.import/RPGItem.png-64019388d5d160a6a8c4f329772123c1.stex" ]
-dest_md5="57706c385acdad9e807239a071128fd1"
 
 [params]
 

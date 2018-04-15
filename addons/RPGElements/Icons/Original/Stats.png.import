@@ -7,10 +7,7 @@ path="res://.import/Stats.png-1cd66c9f0dc0760427df6e25214d4ac6.stex"
 [deps]
 
 source_file="res://addons/RPGElements/Icons/Original/Stats.png"
-source_md5="80dc9ecb84e4434dc94d96a2a2965d80"
-
 dest_files=[ "res://.import/Stats.png-1cd66c9f0dc0760427df6e25214d4ac6.stex" ]
-dest_md5="16b2ec4759b2c17f82c652b84aae722d"
 
 [params]
 
