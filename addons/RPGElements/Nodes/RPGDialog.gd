@@ -52,6 +52,9 @@ signal start_dialog # OK
 # Termina el dialogo
 signal end_dialog # OK
 
+# TODO
+var next_pressed = false
+
 func _ready():
 	timer = Timer.new()
 	add_child(timer)
@@ -66,10 +69,21 @@ func _ready():
 		connect("start_dialog", self, "_on_start_dialog")
 		connect("end_dialog", self, "_on_end_dialog")
 
+func _process(delta):
+	if next_pressed:
+		next_pressed = false
+		
+		if is_finish:
+			stop_dialog()
+		else:
+			timer.start()
+		
+		next_dialog()
+
 # Métodos Públicos
 #
 
-func add_section(_transmitter_name, _text, _img, _avatar_pos = LEFT):
+func add_section(_transmitter_name, _text, _img = null, _avatar_pos = LEFT):
 	var section = new_section()
 	
 	section["TransmitterName"] = _transmitter_name
@@ -93,6 +107,9 @@ func start_dialog():
 	emit_signal("start_dialog")
 	has_increased = true
 	timer.start()
+
+func next_pressed():
+	next_pressed = true
 
 # Setters/Getters
 #
@@ -125,15 +142,6 @@ func new_section():
 	}
 	
 	return section
-
-func _input(event):
-	if event.is_action_pressed("ui_accept"):
-		if is_finish:
-			stop_dialog()
-		else:
-			timer.start()
-		
-		next_dialog()
 	
 func stop_dialog():
 	dialogue = null
@@ -188,8 +196,9 @@ func _on_Timer_timeout():
 				avatar.texture = dialogue[index_dialog]["Avatar"]
 				emit_signal("changed_avatar")
 	
-	text_progress += current_text[index_letter]
-	index_letter += 1
+	if current_text.length() >= 1:
+		text_progress += current_text[index_letter]
+		index_letter += 1
 	
 	if index_letter == current_text.length():
 		index_letter = 0
@@ -201,7 +210,7 @@ func _on_Timer_timeout():
 	emit_signal("updated_text")
 	debug(text)
 
-	if dialogue.size() == index_dialog and current_text.length() == text_progress.length():
+	if dialogue != null and dialogue.size() == index_dialog and current_text.length() == text_progress.length():
 		is_finish = true
 		timer.stop()
 

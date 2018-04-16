@@ -1,11 +1,11 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Examples/Example2Dialog/Example2Dialog.gd" type="Script" id=1]
 [ext_resource path="res://addons/RPGElements/Nodes/RPGDialog.gd" type="Script" id=2]
 [ext_resource path="res://addons/RPGElements/Icons/RPGDialog.png" type="Texture" id=3]
 [ext_resource path="res://Examples/Fonts/Nokia/nokia.ttf" type="DynamicFontData" id=4]
 
-[sub_resource type="DynamicFont" id=2]
+[sub_resource type="DynamicFont" id=1]
 
 size = 30
 use_mipmaps = false
@@ -13,7 +13,7 @@ use_filter = false
 font_data = ExtResource( 4 )
 _sections_unfolded = [ "Font", "Settings" ]
 
-[sub_resource type="DynamicFont" id=1]
+[sub_resource type="DynamicFont" id=2]
 
 size = 20
 use_mipmaps = false
@@ -21,9 +21,16 @@ use_filter = false
 font_data = ExtResource( 4 )
 _sections_unfolded = [ "Font", "Settings" ]
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="DynamicFont" id=3]
 
-resource_name = "show"
+size = 30
+use_mipmaps = false
+use_filter = false
+font_data = ExtResource( 4 )
+_sections_unfolded = [ "Font", "Settings" ]
+
+[sub_resource type="Animation" id=4]
+
 length = 0.3
 loop = false
 step = 0.1
@@ -60,6 +67,7 @@ script = ExtResource( 2 )
 __meta__ = {
 "_editor_icon": ExtResource( 3 )
 }
+debug = true
 
 [node name="Title" type="ColorRect" parent="." index="1"]
 anchor_left = 0.0
@@ -92,7 +100,7 @@ mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 4
-custom_fonts/font = SubResource( 2 )
+custom_fonts/font = SubResource( 1 )
 text = "Nombre"
 align = 1
 valign = 1
@@ -134,7 +142,7 @@ mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 4
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = SubResource( 2 )
 text = "hola"
 align = 1
 valign = 1
@@ -143,13 +151,39 @@ lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "Anchor", "Focus", "Grow Direction", "Hint", "Margin", "Rect", "Size Flags", "Theme", "custom_fonts" ]
 
+[node name="Button" type="Button" parent="Dialog" index="1"]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 860.0
+margin_top = 30.0
+margin_right = 1000.0
+margin_bottom = 150.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+custom_fonts/font = SubResource( 3 )
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Next"
+flat = false
+align = 1
+_sections_unfolded = [ "custom_fonts" ]
+
 [node name="Anim" type="AnimationPlayer" parent="." index="3"]
 root_node = NodePath("..")
 autoplay = ""
 playback_process_mode = 1
 playback_default_blend_time = 0.0
 playback_speed = 1.0
-anims/show = SubResource( 3 )
+anims/show = SubResource( 4 )
 blend_times = [  ]
 
 [node name="Delay" type="Timer" parent="." index="4"]
@@ -158,4 +192,5 @@ wait_time = 3.0
 one_shot = true
 autostart = true
 
+[connection signal="pressed" from="Dialog/Button" to="." method="_on_Button_pressed"]
 [connection signal="timeout" from="Delay" to="." method="_on_Delay_timeout"]

@@ -7,21 +7,16 @@ func _ready():
 	$RPGDialog.connect("start_dialog", self, "_on_start_dialog")
 	$RPGDialog.connect("end_dialog", self, "_on_end_dialog")
 	
-	
-	$RPGDialog.add_section("Pedro", "TEST123", null)
-	$RPGDialog.add_section("Pedro", "Hola estimado ¿Cómo ha estado?", null)
-	$RPGDialog.add_section("Juan", "Hola ¿Qué tal?, ¿Bién y usted?", null)
-	$RPGDialog.add_section("Pedro", "Bién acá programando un juego", null)
-	$RPGDialog.add_section("Juan", "Ohh eso me parece genial", null)
-	$RPGDialog.add_section("Pedro", "Gracias", null)
+	$RPGDialog.add_section("Pedro", "TEST123")
+	$RPGDialog.add_section("Pedro", "Hola estimado ¿Cómo ha estado?")
+	$RPGDialog.add_section("Juan", "Hola ¿Qué tal?, ¿Bién y usted?")
+	$RPGDialog.add_section("Pedro", "Bién acá programando un juego")
+	$RPGDialog.add_section("Juan", "Ohh eso me parece genial")
+	$RPGDialog.add_section("Pedro", "Gracias")
 
 func _on_changed_transmitter_name():
 	if $RPGDialog.get_transmitter_name() != null:
 		$Title/Name.text = $RPGDialog.get_transmitter_name()
-	
-func _on_changed_avatar():
-	# TODO: hacer que cambie el avatar también
-	return
 	
 func _on_udated_text():
 	if $RPGDialog.get_text() != null:
@@ -35,3 +30,10 @@ func _on_end_dialog():
 
 func _on_Delay_timeout():
 	$RPGDialog.start_dialog()
+	
+func _on_changed_avatar():
+	# TODO: hacer que cambie el avatar también
+	return
+
+func _on_Button_pressed():
+	$RPGDialog.next_pressed()
