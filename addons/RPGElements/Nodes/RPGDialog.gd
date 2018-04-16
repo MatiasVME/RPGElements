@@ -40,23 +40,23 @@ var dialogue = []
 var timer
 
 # Se cambia el trasmitter_name
-signal changed_transmitter_name
+signal changed_transmitter_name # OK
 # Se cambia el avatar
 signal changed_avatar
 # Pasa al siguiente texto
-signal changed_text
+signal changed_text # OK
 # Se actualiza el texto (por cada letra)
-signal updated_text
+signal updated_text # OK
 # Comienza el dialogo
-signal start_dialog
+signal start_dialog # OK
 # Termina el dialogo
-signal end_dialog
+signal end_dialog # OK
 
 func _ready():
 	timer = Timer.new()
+	add_child(timer)
 	timer.connect("timeout", self, "_on_Timer_timeout")
-	timer.wait_time = 0.2
-	timer.autostart = true
+	timer.wait_time = 0.01
 	
 	if self.debug:
 		connect("changed_transmitter_name", self, "_on_changed_transmitter_name")
@@ -74,6 +74,10 @@ func add_section(_transmitter_name, _text, _img, _avatar_pos = LEFT):
 	
 	section["TransmitterName"] = _transmitter_name
 	section["Text"] = _text
+	# Lo siguiente arregla un error al mostrar un texto, ya que no se muestra
+	# la última letra:
+	section["Text"] += " "
+	
 	section["Avatar"] = _img
 	
 	dialogue.append(section)
@@ -105,6 +109,14 @@ func get_text():
 # Métodos "Privados"
 #
 
+var index_dialog = 0
+var index_letter = 0
+var current_text = ""
+var text_progress = ""
+var has_increased = false
+var next_dialog = false
+var is_finish = false
+
 func new_section():
 	var section = {
 		TransmitterName = null,
@@ -114,21 +126,13 @@ func new_section():
 	
 	return section
 
-const TEST_MODE = false
-
-var index_dialog = 0
-var index_letter = 0
-var current_text = ""
-var text_progress = ""
-var has_increased = false
-var next_dialog = false
-var is_finish = false
-
 func _input(event):
 	if event.is_action_pressed("ui_accept"):
 		if is_finish:
 			stop_dialog()
-			
+		else:
+			timer.start()
+		
 		next_dialog()
 	
 func stop_dialog():
@@ -142,7 +146,7 @@ func stop_dialog():
 	next_dialog = false
 	is_finish = false
 	
-	emit_signal("start_dialog")
+	emit_signal("end_dialog")
 
 # Es para ver si el index_dialog ha incrementado
 func has_increased():
@@ -165,22 +169,24 @@ func next_dialog():
 #
 
 func _on_Timer_timeout():
-	print("TIMER")
+	debug("_on_Timer_timeout")
+
 	if next_dialog:
 		text_progress = ""
+		timer.stop()
 		return
 	
 	if has_increased:
 		current_text = dialogue[index_dialog]["Text"]
-		emit_signal("updated_text")
 		
 		if transmitter_name != dialogue[index_dialog]["TransmitterName"]:
 			transmitter_name = dialogue[index_dialog]["TransmitterName"]
 			emit_signal("changed_transmitter_name")
 		
-		if avatar.texture != dialogue[index_dialog]["Avatar"]:
-			avatar.texture = dialogue[index_dialog]["Avatar"]
-			emit_signal("changed_avatar")
+		if dialogue[index_dialog]["Avatar"] != null:
+			if avatar.texture != dialogue[index_dialog]["Avatar"]:
+				avatar.texture = dialogue[index_dialog]["Avatar"]
+				emit_signal("changed_avatar")
 	
 	text_progress += current_text[index_letter]
 	index_letter += 1
@@ -190,11 +196,10 @@ func _on_Timer_timeout():
 		index_dialog += 1
 		has_increased = true
 		next_dialog = true
-		
-#	if index_letter < current_text.length() and index_letter % 2 == 0:
-#		SoundManager.play_sound(SoundManager.Sound.WRITE)
 
-	print(text_progress)
+	text = text_progress
+	emit_signal("updated_text")
+	debug(text)
 
 	if dialogue.size() == index_dialog and current_text.length() == text_progress.length():
 		is_finish = true

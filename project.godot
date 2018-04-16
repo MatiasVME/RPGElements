@@ -18,6 +18,13 @@ config/icon="res://icon.png"
 
 Persistence="*res://Examples/Persistence.tscn"
 
+[display]
+
+window/size/test_width=512
+window/size/test_height=300
+window/stretch/mode="2d"
+window/stretch/aspect="keep"
+
 [editor_plugins]
 
 enabled=PoolStringArray( "PersistenceNode", "RPGElements" )

@@ -1,25 +1,37 @@
 extends Node
 
 func _ready():
-		$RPGDialog.connect("changed_transmitter_name", self, "_on_changed_transmitter_name")
-		$RPGDialog.connect("changed_avatar", self, "_on_changed_avatar")
-		$RPGDialog.connect("updated_text", self, "_on_udated_text")
+	$RPGDialog.connect("changed_transmitter_name", self, "_on_changed_transmitter_name")
+	$RPGDialog.connect("changed_avatar", self, "_on_changed_avatar")
+	$RPGDialog.connect("updated_text", self, "_on_udated_text")
+	$RPGDialog.connect("start_dialog", self, "_on_start_dialog")
+	$RPGDialog.connect("end_dialog", self, "_on_end_dialog")
 	
-		$RPGDialog.add_section("Pedro picapiedras", "hablo muchas cosas blab jlkfj s kflj askfj ", null)
-		$RPGDialog.add_section("Holaxs", "hafsgfdg dgdf  gf  balblakjsdlk asdjlkfj s kflj askfj ", null)
-		$RPGDialog.add_section("xD", "sdfsdaf jsdlk asdjlkfj s kflj askfj ", null)
-		$RPGDialog.add_section("Pedro sd", "hablogd g fdgb balblakjsdllkfj s kflj askfj ", null)
-		$RPGDialog.add_section("fdsa picapiedras", "hablo mgdf  gdgdgs blab bdjlkfj s kflj askfj ", null)
-		$RPGDialog.add_section("Pedro fads", "hablo muchas cosas blab bal s kflj askfj ", null)
-#		self.set_current_dialog(i_dialog.get_dialogue())
-		$RPGDialog.start_dialog()
+	
+	$RPGDialog.add_section("Pedro", "TEST123", null)
+	$RPGDialog.add_section("Pedro", "Hola estimado ¿Cómo ha estado?", null)
+	$RPGDialog.add_section("Juan", "Hola ¿Qué tal?, ¿Bién y usted?", null)
+	$RPGDialog.add_section("Pedro", "Bién acá programando un juego", null)
+	$RPGDialog.add_section("Juan", "Ohh eso me parece genial", null)
+	$RPGDialog.add_section("Pedro", "Gracias", null)
 
 func _on_changed_transmitter_name():
-	$Title/Name.text = $RPGDialog.get_text()
+	if $RPGDialog.get_transmitter_name() != null:
+		$Title/Name.text = $RPGDialog.get_transmitter_name()
 	
 func _on_changed_avatar():
 	# TODO: hacer que cambie el avatar también
 	return
 	
 func _on_udated_text():
-	$Dialog/Text.text = $RPGDialog.get_text()
+	if $RPGDialog.get_text() != null:
+		$Dialog/Text.text = $RPGDialog.get_text()
+		
+func _on_start_dialog():
+	$Anim.play("show")
+	
+func _on_end_dialog():
+	$Anim.play_backwards("show")
+
+func _on_Delay_timeout():
+	$RPGDialog.start_dialog()
