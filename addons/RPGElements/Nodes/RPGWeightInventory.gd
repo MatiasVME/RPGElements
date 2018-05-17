@@ -20,19 +20,11 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-extends Node
+# TODO:
+#  + Crear RPGSlotInventory
+#  + Hacer los iconos para los respectivos inventarios
 
-export (bool) var debug = true
-
-var Persistence
+extends "RPGInventory.gd"
 
 func _ready():
-	Persistence = load("res://addons/PersistenceNode/persistence_node.gd").new()
-	
-	if debug:
-		Persistence
-
-
-func debug(message, something1 = "", something2 = ""):
-	if debug:
-		print("[RPGElements] ", message, " ", something1, " ", something2)
+	pass
