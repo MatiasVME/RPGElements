@@ -24,6 +24,7 @@
 #  + Crear RPGSlotInventory
 #  + Hacer los iconos para los respectivos inventarios
 
+tool
 extends "RPGInventory.gd"
 
 func _ready():
