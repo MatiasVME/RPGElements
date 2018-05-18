@@ -14,16 +14,16 @@ func _ready():
 		Stat3 = 3
 	}
 
-	$RPGStats.set_serialized(dict)
+	$RPGStats.set_dictionary(dict)
 
-	print("$RPGStats.get_serialized(): ", $RPGStats.get_serialized())
+	print("$RPGStats.get_dictionary(): ", $RPGStats.get_dictionary())
 	
 	$RPGStats.add_points(5)
 	$RPGStats.add_points_to_stat(3, "Stat1")
 	
-	print("$RPGStats.get_serialized(): ", $RPGStats.get_serialized())
+	print("$RPGStats.get_dictionary(): ", $RPGStats.get_dictionary())
 	
 	$RPGStats.remove_points_to_stat(100, "Stat1")
 	$RPGStats.remove_points_to_stat(1, "Stat2")
 	
-	print("$RPGStats.get_serialized(): ", $RPGStats.get_serialized())
+	print("$RPGStats.get_dictionary(): ", $RPGStats.get_dictionary())

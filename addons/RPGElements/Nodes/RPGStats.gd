@@ -101,13 +101,13 @@ func get_stat(stat_name):
 func get_stats():
 	return stats
 
-# Para ser serializado debe de ser un diccionario con las siguientes
-# características.
+# Es para enviarle un diccionario y lo tansforma a objeto, el
+# diccionario debe de tener la siguiente forma:
 # dict = {
 #   StatName1 = value,
 #   StatName2 = value
 # }
-func set_serialized(dict):
+func set_dictionary(dict):
 	if typeof(dict) == TYPE_DICTIONARY:
 		for i in range(0, dict.size()):
 			# Obtener la key i y añadirlo al array con add_stat()
@@ -116,12 +116,12 @@ func set_serialized(dict):
 	else:
 		.debug("No es diccionario")
 
-# Ger serialized es para obtener el bojeto serializado para poder
-# poder almacenarlo en disco.
-func get_serialized():
-	var serialized = {}
+# Es para obtener el diccionario del objeto, esto es útil para
+# serializar el objeto y luego almacenarlo en disco.
+func get_dictionary():
+	var dict = {}
 	
 	for i in range(0, stats.size()):
-		serialized[stats[i][0]] = stats[i][1]
+		dict[stats[i][0]] = stats[i][1]
 
-	return serialized
+	return dict
