@@ -24,25 +24,61 @@ tool
 extends "RPGElement.gd"
 
 var stats = []
+var points = 0
 
 # Métodos Públicos
 #
 
 func add_stat(stat_name, points):
 	stats.append([stat_name, points])
+	
+func add_points(_points):
+	points += _points
+	
+func add_points_to_stat(cant, stat_name):
+	if not cant > points:
+		pass #TODO
+	else:
+		.debug("La cantidad dada, supera a la cantidad de puntos")
+
+func clear_stats():
+	stats.clear()
+	stats = []
+
+
 
 # Setters/Getters
 #
 
-func get_stat(stat_name):
+func get_stat_value(stat_name):
+	# range() no devuelve el último valor
 	for i in range(0, stats.size()):
-		pass # TODO
+		if stats[i][0] == stat_name:
+			return stats[i][1] # Retorna el valor de la stat
 
-func set_serialized(dict):
-	pass
+	.debug("No se ecuentra stat_name: ", stat_name)
 	
-func get_serialized():
-	pass
+# Para ser serializado debe de ser un diccionario con las siguientes
+# características.
+# dict = {
+#   StatName1 = value,
+#   StatName2 = value
+# }
+func set_serialized(dict):
+	if typeof(dict) == TYPE_DICTIONARY:
+		for i in range(0, dict.size()):
+			# Obtener la key i y añadirlo al array con add_stat()
+			# Obtener el value i y añadirlo al array con add_stat()
+			add_stat(dict.keys()[i], dict.values()[i])
+	else:
+		.debug("No es diccionario")
 
-# Métodos "Privados"
-#
+# Ger serialized es para obtener el bojeto serializado para poder
+# poder almacenarlo en disco.
+func get_serialized():
+	var serialized = {}
+	
+	for i in range(0, stats.size()):
+		serialized[stats[i][0]] = stats[i][1]
+
+	return serialized
