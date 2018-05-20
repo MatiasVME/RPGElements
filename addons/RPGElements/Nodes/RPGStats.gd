@@ -24,7 +24,7 @@ tool
 extends "RPGElement.gd"
 
 # Almacena las stats en si y los puntos relacionados con la stat, por
-# ejemplo: [["Fuerza", 3], ["Inteligencia", 2]].
+# ejemplo: [["Fuerza", 3, 50], ["Inteligencia", 2, 25]].
 var stats = [] # No se debe editar directamente
 # Puntos que se acumulan para añadir a las stats
 var points = 0 setget , get_points # No se debe editar directamente
@@ -33,8 +33,8 @@ var points = 0 setget , get_points # No se debe editar directamente
 #
 
 # Añadir una stat con una determinada cantidad de puntos
-func add_stat(stat_name, points):
-	stats.append([stat_name, points])
+func add_stat(stat_name, points, max_points):
+	stats.append([stat_name, points, max_points])
 
 # Añadir puntos para acumular en points, estos puntos pueden ser usados
 # para ser añadidos con el método add_points_to_stat()
@@ -101,18 +101,20 @@ func get_stat(stat_name):
 func get_stats():
 	return stats
 
+# TODO: Necesita repararse para que pueda recibir otro tipo de
+#   diccionarios.
 # Es para enviarle un diccionario y lo tansforma a objeto, el
 # diccionario debe de tener la siguiente forma:
 # dict = {
 #   StatName1 = value,
 #   StatName2 = value
 # }
-func set_dictionary(dict):
+func set_dictionary(dict, default_max_points = 50):
 	if typeof(dict) == TYPE_DICTIONARY:
 		for i in range(0, dict.size()):
 			# Obtener la key i y añadirlo al array con add_stat()
 			# Obtener el value i y añadirlo al array con add_stat()
-			add_stat(dict.keys()[i], dict.values()[i])
+			add_stat(dict.keys()[i], dict.values()[i], default_max_points)
 	else:
 		.debug("No es diccionario")
 
@@ -122,6 +124,9 @@ func get_dictionary():
 	var dict = {}
 	
 	for i in range(0, stats.size()):
-		dict[stats[i][0]] = stats[i][1]
+		dict[stats[i][0]] = { 
+			Points = stats[i][1],
+			MaxPoints = stats[i][2]
+		}
 
 	return dict

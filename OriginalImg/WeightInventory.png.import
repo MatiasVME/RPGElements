@@ -2,12 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/RPGPlayer.png-ea771d8cc8f8cef47e8b05f069e7de2f.stex"
+path="res://.import/WeightInventory.png-9da04a0920220e09f4a990b40835cc5b.stex"
 
 [deps]
 
-source_file="res://addons/RPGElements/Icons/RPGPlayer.png"
-dest_files=[ "res://.import/RPGPlayer.png-ea771d8cc8f8cef47e8b05f069e7de2f.stex" ]
+source_file="res://OriginalImg/WeightInventory.png"
+source_md5="1301ba6ece3b35963fa8f517d3ce19ca"
+
+dest_files=[ "res://.import/WeightInventory.png-9da04a0920220e09f4a990b40835cc5b.stex" ]
+dest_md5="0b4d0149b13e6ff0f934e9791e602330"
 
 [params]
 

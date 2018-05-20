@@ -3,7 +3,7 @@ extends Node
 func _ready():
 	print("$RPGStats.get_stat_value(hola)", $RPGStats.get_stat_value("hola"))
 	
-	$RPGStats.add_stat("hola", 50)
+	$RPGStats.add_stat("hola", 50, 100)
 	
 	print("$RPGStats.get_stat_value(hola): ", $RPGStats.get_stat_value("hola"))
 	print("$RPGStats.get_stat(hola): ", $RPGStats.get_stat("hola"))

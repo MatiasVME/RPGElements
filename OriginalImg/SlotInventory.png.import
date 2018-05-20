@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/RPGElementsFull.png-de0009387e7d7084a519da29e175ba08.stex"
+path="res://.import/SlotInventory.png-b13bdcfa79e6451144f41b165bb5fdd8.stex"
 
 [deps]
 
-source_file="res://OriginalImg/RPGElementsFull.png"
-source_md5="5728cf311b521b1cf07720bae2610124"
+source_file="res://OriginalImg/SlotInventory.png"
+source_md5="3a5ef71dc54281be13e83e7b39934846"
 
-dest_files=[ "res://.import/RPGElementsFull.png-de0009387e7d7084a519da29e175ba08.stex" ]
-dest_md5="65d967160f9a90f09fe8a9c2c2118180"
+dest_files=[ "res://.import/SlotInventory.png-b13bdcfa79e6451144f41b165bb5fdd8.stex" ]
+dest_md5="6ad69f7a2232e4dfe90656778cc452b6"
 
 [params]
 

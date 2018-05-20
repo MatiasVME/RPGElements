@@ -24,14 +24,15 @@ tool
 extends "RPGElement.gd"
 
 var player_name setget set_player_name, get_player_name
-# Inventario/s asigando/s a el player
-var inv = []
-
-# Todos los player tienen stats
-var stats = preload("RPGStats.gd").new() 
 
 var level = 0
 var level_max = 30
+
+# Vitalidad
+var hp = 0 setget set_hp, get_hp
+# Mana
+var energy = 0
+var defense = 0
 
 var xp = 0
 # En xp_required 0 equivale a level 1
@@ -39,6 +40,9 @@ var xp_required = [] setget , get_xp_required
 
 signal level_up
 signal get_xp
+# signal get_damage
+# signal consume_energy
+# signal consume_defense
 
 func _ready():
 	create_default_xp_curve()
@@ -94,19 +98,13 @@ func remove_xp(_xp):
 	else:
 		xp = 0
 
-func add_inv(_inv):
-	inv.append(_inv)
-
-func remove_inv(inv_name):
-	pass
-
 # Setters/Getters
 #
 
-func set_serialized(dict):
+func set_dictionary(dict):
 	pass
 
-func get_serialized():
+func get_dictionary():
 	pass
 
 func get_xp_required():
@@ -118,11 +116,11 @@ func set_player_name(_player_name):
 func get_player_name():
 	return player_name
 	
-func get_inv(index):
-	return inv[index]
-
-func get_all_inv():
-	return inv
+func set_hp(_hp):
+	hp = _hp
+	
+func get_hp():
+	return hp
 
 # Métodos "Privados"
 #

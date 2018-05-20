@@ -2,12 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Dialog.png-6cc438d4d4b33454b42c0355b83ca128.stex"
+path="res://.import/Dialog.png-a87cf840da43be258362077397ae380d.stex"
 
 [deps]
 
-source_file="res://addons/RPGElements/Icons/Original/Dialog.png"
-dest_files=[ "res://.import/Dialog.png-6cc438d4d4b33454b42c0355b83ca128.stex" ]
+source_file="res://OriginalImg/Dialog.png"
+source_md5="e2697f4156813d9e1ecc9abc25ee163d"
+
+dest_files=[ "res://.import/Dialog.png-a87cf840da43be258362077397ae380d.stex" ]
+dest_md5="1adcede8381405efb1e897c36e129546"
 
 [params]
 
