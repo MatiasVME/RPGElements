@@ -10,3 +10,17 @@ func _ready():
 	$Pedro.add_xp(100)
 	$Pedro.add_xp(10)
 	$Pedro.add_xp(1)
+	
+	# HP
+	$Pedro.add_hp(5)
+	$Pedro.add_hp(5)
+	
+	$Pedro.remove_hp(3)
+	$Pedro.remove_hp(7)
+	
+	$Pedro.add_hp(100)
+	
+	# Energía
+	$Pedro.add_energy(5)
+	$Pedro.remove_energy(3)
+	$Pedro.add_energy(8)

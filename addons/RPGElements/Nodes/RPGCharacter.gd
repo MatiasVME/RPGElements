@@ -103,8 +103,9 @@ func add_xp(_xp):
 			break
 		
 	xp += _xp
-	debug(xp)
-	
+	.debug("XP: ", xp)
+
+# De momento solo remueve xp, no baja de nivel.
 func remove_xp(_xp):
 	if xp - _xp >= 0:
 		xp -= _xp
@@ -201,39 +202,45 @@ func set_energy(_energy):
 	
 func get_energy():
 	return energy
+	
+func set_max_energy(_max_energy):
+	max_energy = _max_energy
+	
+func get_max_energy():
+	return max_energy
 
 # Señales
 #
 
 func _on_level_up():
-	debug("Level Up!!: ", level)
+	.debug("Has subido de nivel!!: ", level)
 	
 func _on_get_xp():
-	debug("Get XP: ", xp)
+	.debug("Obtener XP: ", xp)
 	
 func _on_add_hp():
-	pass
+	.debug("Añadir HP: ", hp)
 	
 func _on_remove_hp():
-	pass
+	.debug("Eliminar HP: ", hp)
 	
 func _on_full_hp():
-	pass
+	.debug("HP esta lleno: ", hp)
 	
 func _on_dead():
-	pass
+	.debug("Has muerto: ", hp)
 
 func _on_add_energy():
-	pass
+	.debug("Añadir energía: ", energy)
 
 func _on_remove_energy():
-	pass
+	.debug("Eliminar energía: ", energy)
 	
 func _on_full_energy():
-	pass
+	.debug("Estas lleno de energía: ", energy)
 	
 func _on_no_energy():
-	pass
+	.debug("No queda energía: ", energy)
 
 # Métodos "Privados"
 #
