@@ -24,3 +24,10 @@ func _ready():
 	$Pedro.add_energy(5)
 	$Pedro.remove_energy(3)
 	$Pedro.add_energy(8)
+	
+	$Pedro.set_dictionary($Pedro.get_dictionary())
+	
+	$Pedro.add_xp(500)
+	
+	
+	

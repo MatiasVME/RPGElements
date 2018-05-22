@@ -154,10 +154,30 @@ func remove_energy(_energy):
 #
 
 func set_dictionary(dict):
-	pass
+	player_name = dict["PlayerName"]
+	level = dict["Level"] 
+	level_max = dict["LevelMax"] 
+	hp = dict["HP"] 
+	max_hp = dict["HPMax"]
+	energy = dict["Energy"]
+	max_energy = dict["EnergyMax"]
+	xp = dict["XP"]
+	xp_required = dict["XPRequired"]
 
 func get_dictionary():
-	pass
+	var dict = {}
+	
+	dict["PlayerName"] = player_name
+	dict["Level"] = level
+	dict["LevelMax"] = level_max
+	dict["HP"] = hp
+	dict["HPMax"] = max_hp
+	dict["Energy"] = energy
+	dict["EnergyMax"] = max_energy
+	dict["XP"] = xp
+	dict["XPRequired"] = xp_required
+	
+	return dict
 
 func get_xp_required():
 	return xp_required
