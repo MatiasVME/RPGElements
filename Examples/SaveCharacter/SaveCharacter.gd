@@ -27,7 +27,7 @@ func _ready():
 	pedro.remove_energy(3)
 	pedro.add_energy(8)
 	
-	pedro.add_xp(500)
-	
-	
-	
+	var data = Persistence.get_data()
+	data["datos"] = inst2dict(pedro)
+#	print(data)
+	Persistence.save_data()

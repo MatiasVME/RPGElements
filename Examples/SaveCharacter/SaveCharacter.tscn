@@ -1,10 +1,10 @@
 [gd_scene load_steps=4 format=1]
 
-[ext_resource path="res://Examples/ExampleCharacter/ExampleCharacter.gd" type="Script" id=1]
+[ext_resource path="res://Examples/SaveCharacter/SaveCharacter.gd" type="Script" id=1]
 [ext_resource path="res://addons/RPGElements/Nodes/RPGCharacter.gd" type="Script" id=2]
 [ext_resource path="res://addons/RPGElements/Icons/RPGCharacter.png" type="Texture" id=3]
 
-[node name="ExampleCharacter" type="Node"]
+[node name="SaveCharacter" type="Node"]
 
 script/script = ExtResource( 1 )
 
