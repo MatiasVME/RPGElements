@@ -1,6 +1,7 @@
 # MIT License
 #
 # Copyright (c) 2018 Matías Muñoz Espinoza
+# Copyright (c) 2018 Jovani Pérez
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -23,15 +24,6 @@
 extends Node
 
 export (bool) var debug = true
-
-var Persistence
-
-func _ready():
-	Persistence = load("res://addons/PersistenceNode/persistence_node.gd").new()
-	
-	if debug:
-		Persistence
-
 
 func debug(message, something1 = "", something2 = ""):
 	if debug:

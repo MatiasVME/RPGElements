@@ -1,6 +1,7 @@
 # MIT License
 #
 # Copyright (c) 2018 Matías Muñoz Espinoza
+# Copyright (c) 2018 Jovani Pérez
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -23,20 +24,20 @@
 tool
 extends "RPGElement.gd"
 
-var player_name setget set_player_name, get_player_name
+export (String) var player_name setget set_player_name, get_player_name
 
-var level = 0
-var level_max = 30
+export (int) var level = 0 setget get_level
+export (int) var level_max = 30 setget get_level_max, set_level_max
 
 # Vitalidad
-var hp = 0 setget set_hp, get_hp
-var max_hp = 10 setget set_max_hp, get_max_hp
+export (int) var hp = 0 setget set_hp, get_hp
+export (int) var max_hp = 10 setget set_max_hp, get_max_hp
 # Mana
-var energy = 0 setget set_energy, get_energy
-var max_energy = 10 setget set_max_energy, get_max_energy
+export (int) var energy = 0 setget set_energy, get_energy
+export (int) var max_energy = 10 setget set_max_energy, get_max_energy
 # var defense = 0 # TODO: Implementar defensa en un futuro
 
-var xp = 0
+export (int) var xp = 0
 # En xp_required 0 equivale a level 1
 var xp_required = [] setget , get_xp_required
 
@@ -54,8 +55,6 @@ signal no_energy
 # signal remove_defense # TODO
 
 func _ready():
-	create_default_xp_curve()
-	
 	# Signals
 	if debug:
 		connect("level_up", self, "_on_level_up")
@@ -73,7 +72,7 @@ func _ready():
 # Métodos Públicos
 #
 
-func create_default_xp_curve(base_xp = 20.4, exponent = 1.05):
+func create_xp_curve(base_xp = 20.4, exponent = 1.05):
 	xp_required.clear()
 	
 	for i in range(1, level_max + 1):
@@ -83,9 +82,6 @@ func create_default_xp_curve(base_xp = 20.4, exponent = 1.05):
 
 # Añade xp y sube de nivel si es necesario
 func add_xp(_xp):
-	if _xp > 0:
-		emit_signal("get_xp")
-	
 	var i = xp
 	while(i < xp + _xp):
 		if level >= level_max:
@@ -103,6 +99,8 @@ func add_xp(_xp):
 			break
 		
 	xp += _xp
+	if _xp > 0:
+		emit_signal("get_xp")
 	.debug("XP: ", xp)
 
 # De momento solo remueve xp, no baja de nivel.
@@ -150,11 +148,26 @@ func remove_energy(_energy):
 	else:
 		.debug("No se puede eliminar esa cantidad de energía")
 
+func restore_hp():
+	hp = max_hp
+	emit_signal("full_hp")
+
 # Setters/Getters
 #
+func get_xp():
+	return xp
 
 func get_xp_required():
 	return xp_required
+	
+func get_level():
+	return level
+	
+func get_level_max():
+	return level_max
+	
+func set_level_max(_level_max):
+	level_max = _level_max
 
 func set_player_name(_player_name):
 	player_name = _player_name

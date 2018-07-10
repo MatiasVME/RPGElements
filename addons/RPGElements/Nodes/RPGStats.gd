@@ -1,6 +1,7 @@
 # MIT License
 #
 # Copyright (c) 2018 Matías Muñoz Espinoza
+# Copyright (c) 2018 Jovani Pérez
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -53,7 +54,7 @@ func remove_points(_points):
 
 # Toma puntos de points y los añade a x stat
 func add_points_to_stat(cant, stat_name):
-	if cant < points:
+	if cant <= points:
 		points -= cant
 		get_stat(stat_name)[1] += cant
 	else:
@@ -82,13 +83,12 @@ func get_points():
 
 # Retorna el valor de la stat
 func get_stat_value(stat_name):
-	# range() no devuelve el último valor
-	for i in range(0, stats.size()):
-		if stats[i][0] == stat_name:
-			return stats[i][1] 
+	return get_stat(stat_name)[1]
 
-	.debug("No se ecuentra stat_name: ", stat_name)
-
+# Retorna el valor maximo de la stat
+func get_stat_max_value(stat_name):
+	return get_stat(stat_name)[2]
+	
 # Retorna el arreglo de la stat
 func get_stat(stat_name):
 	# range() no devuelve el último valor
@@ -100,33 +100,3 @@ func get_stat(stat_name):
 
 func get_stats():
 	return stats
-
-# TODO: Necesita repararse para que pueda recibir otro tipo de
-#   diccionarios.
-# Es para enviarle un diccionario y lo tansforma a objeto, el
-# diccionario debe de tener la siguiente forma:
-# dict = {
-#   StatName1 = value,
-#   StatName2 = value
-# }
-func set_dictionary(dict, default_max_points = 50):
-	if typeof(dict) == TYPE_DICTIONARY:
-		for i in range(0, dict.size()):
-			# Obtener la key i y añadirlo al array con add_stat()
-			# Obtener el value i y añadirlo al array con add_stat()
-			add_stat(dict.keys()[i], dict.values()[i], default_max_points)
-	else:
-		.debug("No es diccionario")
-
-# Es para obtener el diccionario del objeto, esto es útil para
-# serializar el objeto y luego almacenarlo en disco.
-func get_dictionary():
-	var dict = {}
-	
-	for i in range(0, stats.size()):
-		dict[stats[i][0]] = { 
-			Points = stats[i][1],
-			MaxPoints = stats[i][2]
-		}
-
-	return dict
