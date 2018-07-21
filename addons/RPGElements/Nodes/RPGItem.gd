@@ -24,21 +24,22 @@
 tool
 extends "RPGElement.gd"
 
-var item_name = "" setget set_item_name, get_item_name
+export (String) var item_name = "" setget set_item_name, get_item_name
 # Descripción
-var desc = "" setget set_desc, get_desc
-var identifier = -1
-var amount = 1
-var stack_max = 10
+export (String) var desc = "" setget set_desc, get_desc
+export (int) var amount = 1
 # Precio de compra de un item
-var price = 100
+export (int) var price = 100
 # Precio de venta de un item
-var sell_price = 50 setget set_sell_price, get_sell_price
+export (int) var sell_price = 50 setget set_sell_price, get_sell_price
 # Imagen del item
 var texture_path setget set_texture_path, get_texture_path
 
 # Opcionales
-var weight = 1 setget set_weight, get_weight
+export (int) var weight = 1 setget set_weight, get_weight
+# Los RPGSlotsInventory tiene límite de stack
+# pero RPGWeightInventory no tiene límite de stack
+export (int) var stack_max = 10
 var atributes = []
 
 # Métodos Públicos y Setters/Getters

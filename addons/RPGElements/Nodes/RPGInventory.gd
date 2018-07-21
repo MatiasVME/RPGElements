@@ -23,77 +23,160 @@
 
 extends "RPGElement.gd"
 
-var inv = {} #setget set_inv, get_inv
-var inv_name = "" setget set_inv_name, get_inv_name
-var inventory_full = false setget , is_full
+var inv = [] setget , get_inv
+export (String) var inv_name = "" setget set_inv_name, get_inv_name
 
-func _init():
-	rand_seed(199)
+#onready var void_item = preload("res://addons/RPGElements/Nodes/RPGItem.gd").new()
+
+signal item_added
+signal item_removed
+signal item_taken
 
 # Métodos Públicos y Setters/Getters
 #
 
-func set_inv(_inv):
-	inv = _inv
-	
 func get_inv():
 	return inv
 
-# Añade el item sin pensarlo
+# Añade el item sin pensarlo mucho
 func add_item(item):
-	if not is_full():
-		var existing_item = search_item(item.get_item_name())
-		item.identifier = get_identifier()
-		
-		if existing_item != null:
-			if not check_stack_full(existing_item, item):
-				inv[str(existing_item.identifier)].amount += item.amount
-				return true
-		
-		inv[str(item.identifier)] = item
-		return true
-		
-	return false
+	inv.append(item)
+	emit_signal("item_added")
 
-func check_stack_full(item, newitem):
-	if (inv[str(item.identifier)].amount + newitem.amount) <= inv[str(item.identifier)].stack_max:
-		return false
+# Se le pasa el item para ser retirado del inventario
+# y la cantidad. Si la cantidad de items retirados es
+# menor que la cantidad de items que tiene el array,
+# devuelve un item nuevo con la catidad indicada.
+func take_item(item, amount = 1):
+	var item_found
+	
+	# Buscar el item en el invetario y devuelve el indice
+	item_index = inv.find(item)
+	
+	# Si no lo encuentra entonces dice un mensaje de
+	# que no se a encontrado.
+	if item_index == -1:
+		.debug("No se a encontrado el item: ", item)
+		return
+	
+	# Almacena el item para luego retornarlo (mas adelante)
+	item_found = inv[item_index]
+	
+	# Ver la cantidad deseada de items y ver que hacer
+	# en los distintos casos
+	if item_found.amount == amount:
+		inv.remove(item_index)
+		return item_found
+	elif amount > item_found.amount:
+		.debug("La cantidad de items a retirar es superior a la cantidad de items encontrados en el inventario")
+		return
+	elif amount < item_found.amount:
+		item_found.amount -= amount
+		# Creamos un nuevo item para devolverlo
+		var new_item = item.duplicate()
+		new_item.amount = amount
+		# No removemos ningún item ya que quedan algunos
+		# items en el inventario, porque:
+		# amount < item_found.amount
+		return new_item
+
+# TODO: Toma el item del inventario (lo remueve del inventario y lo
+# retorna) TODO
+func take_item_by_name(item_name, amount = 1):
+	var items_to_taken = []
+	
+	# Si la cantidad de items es 1 entonces busca
+	# el primer item que encuentra para
+	if amount == 1:
+		var item = search_all_items_with_the_name(item_name)
+		
+		if item != null:
+			items_to_taken.append(item)
+		else:
+			.debug("No sea a encontrado el item para take_item()")
 	else:
-		return true
+		items_to_taken = search_all_items_with_the_name(item_name)
+	
+	if items_to_taken.size() == 0:
+		return
+	
+	var items_ids = []
+	var amount_count = 0
+	
+	for i in range(0, items_to_taken.size()):
+		if items_to_taken[i].item_name == item_name:
+			items_ids.append(items_to_taken[i].get_instance_ID())
+			
+			if items_to_taken[i].amount > amount:
+				items_to_taken[i].amount -= amount
+				
+				# Retorna un nuevo item sacado de la pila de items
+				# no elimina el item ya que el item actual contiene
+				# mas items del mismo tipo que los que se solicitaron
+				# sacar.
+				var new_item = items_to_taken[i].duplicate()
+				new_item.amount = amount
+				
+				return new_item
+			elif items_to_taken[i].amout == amount:
+				pass
+	pass
 
-func take_item(item_name):
-	var item = search_item(item_name)
+# Busca el item por el id y lo retorna si lo encuentra
+# retorna null si no lo encuentra. La cantidad es la
+# del item como esta apilado.
+# NEEDTEST
+func take_item_by_id(id):
+	var item
+	
+	for i in range(0, inv.size()):
+		if inv[i].get_instance_ID() == id:
+			item = inv[i]
+			remove(i)
+			break
+	
 	if item != null:
-		remove_item(item)
-		item.amount = 1
+		emit_signal("item_taken")
 	
 	return item
-	
-# Remueve el item
-func remove_item(item):
-	if inv.has(str(item.identifier)):
-		if inv[str(item.identifier)].amount >= 1:
-			inv[str(item.identifier)].amount -= 1
-		
-		if inv[str(item.identifier)].amount == 0:
-			inv.erase(str(item.identifier))
-		return true
 
+# Retorna el primer item o pila de items que encuentra con 
+# el nombre indicado
+# NEEDTEST
+func search_item_by_name(item_name):
+	for i in range(0, inv.size()):
+		if inv[i].item_name == item_name:
+			return inv[i]
+			
+	.debug("search_item_by_name() No a encontrado el item.")
+
+# Busca todos los items con el nombre item_name y lo
+# devuelve
+# NEEDTEST
+func search_all_items_with_the_name(item_name):
+	var all_items = []
+	
+	for i in range(0, inv.size()):
+		if inv[i].item_name == item_name:
+			all_items.append(inv[i])
+	
+	return all_items
+
+# Borra totalmente un item
+# NEEDTEST
+func delete_item(item):
+	if inv.has(item):
+		inv.erase(item)
+		emit_signal("item_removed")
+		return true
+		
 	return false
 
-func search_item(item_name):
-	for item in inv.values():
-		if item.get_item_name() == item_name:
-			var newitem = preload("res://addons/RPGElements/Nodes/RPGItem.gd").new()#item.duplicate(true)
-			newitem.set_item_name(item.get_item_name())
-			newitem.set_desc(item.get_desc())
-			newitem.identifier = item.identifier
-			newitem.amount = item.amount
-			newitem.stack_max = item.stack_max
-			newitem.weight = item.weight
-			newitem.atributes = item.atributes
-			return newitem
-	return null
+func remove_all_items():
+	for i in range(0, inv.size()):
+		inv[i].queue_free()
+	
+	inv = []
 	
 func set_inv_name(_inv_name):
 	inv_name = _inv_name
@@ -101,21 +184,30 @@ func set_inv_name(_inv_name):
 func get_inv_name():
 	return inv_name
 
-func set_full():
-	inventory_full = true
+# Devuelve -este- inventario en forma de diccionario.
+func inv2dict():
+	var dict_inv = {}
+	
+	for i in range(0, self.inv.size() - 1):
+		dict_inv[str(i)] = inst2dict(inv[i])
+	
+	var dict = inst2dict(self)
+	dict["inv"] = dict_inv
+	
+	return dict
 
-func reset_full():
-	inventory_full = false
+# Recibe un diccionario de inventario y devuelve una 
+# instancia de inventario.
+func dict2inv(_dict):
+	var inst
+	var inst_inv
+	
+	inst = dict2inst(_dict)
 
-func is_full():
-	return inventory_full
+	for id in inst.get_inv():
+		inst.get_inv()[id] = dict2inst(inst.get_inv()[id])
+
+	return inst
 
 # Métodos "Privados"
 #
-
-func get_identifier():
-	randomize()
-	var id = int(rand_range(1, 100000))
-	while inv.has(id):
-		id = int(rand_range(1, 100000))
-	return id
