@@ -23,7 +23,7 @@
 
 extends Node
 
-export (bool) var debug = true
+export (bool) var debug = false
 
 func debug(message, something1 = "", something2 = ""):
 	if debug:

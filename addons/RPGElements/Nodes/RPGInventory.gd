@@ -40,8 +40,11 @@ func get_inv():
 
 # Añade el item sin pensarlo mucho
 func add_item(item):
-	inv.append(item)
-	emit_signal("item_added")
+	if typeof(inv) == TYPE_ARRAY:
+		inv.append(item)
+		emit_signal("item_added")
+	else:
+		.debug("Por algún motivo ", inv, " no es un array.")
 
 # Se le pasa el item para ser retirado del inventario
 # y la cantidad. Si la cantidad de items retirados es
@@ -51,7 +54,7 @@ func take_item(item, amount = 1):
 	var item_found
 	
 	# Buscar el item en el invetario y devuelve el indice
-	item_index = inv.find(item)
+	var item_index = inv.find(item)
 	
 	# Si no lo encuentra entonces dice un mensaje de
 	# que no se a encontrado.

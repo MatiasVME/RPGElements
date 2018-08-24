@@ -33,11 +33,18 @@ var inventory_full = false setget , is_full
 
 signal is_full
 
+func _ready():
+	if debug:
+		connect("is_full", self, "_on_is_full")
+
 # Métodos Públicos y Setters/Getters
 #
 
 # NEEDTEST
 func add_item(item):
+	if item == null:
+		return false
+	
 	var total_weight = current_weight + item.weight * item.amount
 	
 	if total_weight < max_weight:
@@ -114,3 +121,9 @@ func stack_all_items():
 	
 # Métodos "Privados"
 #
+
+# Eventos
+#
+
+func _on_is_full():
+	.debug("Full Inventory: ", inv_name)

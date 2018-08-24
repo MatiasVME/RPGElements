@@ -29,7 +29,7 @@ export (String) var item_name = "" setget set_item_name, get_item_name
 export (String) var desc = "" setget set_desc, get_desc
 export (int) var amount = 1
 # Precio de compra de un item
-export (int) var price = 100
+export (int) var buy_price = 100 setget set_buy_price, get_buy_price
 # Precio de venta de un item
 export (int) var sell_price = 50 setget set_sell_price, get_sell_price
 # Imagen del item
@@ -62,11 +62,11 @@ func set_desc(_desc):
 func get_desc():
 	return desc
 	
-func set_price(_price):
-	price = _price
+func set_buy_price(_buy_price):
+	buy_price = _buy_price
 	
-func get_price():
-	return price
+func get_buy_price():
+	return buy_price
 
 func add_atribute(atribute_name, value):
 	atributes.append([atribute_name, value])
