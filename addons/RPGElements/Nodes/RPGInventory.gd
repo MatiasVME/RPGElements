@@ -189,11 +189,11 @@ func get_inv_name():
 
 # Devuelve -este- inventario en forma de diccionario.
 func inv2dict():
-	var dict_inv = {}
+	var dict_inv = []
 	
-	for i in range(0, self.inv.size() - 1):
-		dict_inv[str(i)] = inst2dict(inv[i])
-	
+	for i in range(0, inv.size()):
+		dict_inv.append(inst2dict(inv[i]))
+
 	var dict = inst2dict(self)
 	dict["inv"] = dict_inv
 	
@@ -202,15 +202,23 @@ func inv2dict():
 # Recibe un diccionario de inventario y devuelve una 
 # instancia de inventario.
 func dict2inv(_dict):
-	var inst
-	var inst_inv
+	var inst_inv = dict2inst(_dict)
+	var items_array = []
 	
-	inst = dict2inst(_dict)
-
-	for id in inst.get_inv():
-		inst.get_inv()[id] = dict2inst(inst.get_inv()[id])
-
-	return inst
+	var i = 0
+	while i < inst_inv.get_inv().size():
+		items_array.append(inst_inv.get_inv()[i])
+		i += 1
+	
+	inst_inv.get_inv().clear()
+	
+	i = 0
+	while i < items_array.size():
+		inst_inv.add_item(dict2inst(items_array[i]))
+		i += 1
+		
+	return inst_inv
+	
 
 # Métodos "Privados"
 #

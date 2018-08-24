@@ -15,5 +15,13 @@ __meta__ = {
 "_editor_icon": ExtResource( 3 )
 }
 debug = true
+player_name = null
+level = 0
+level_max = 30
+hp = 0
+max_hp = 10
+energy = 0
+max_energy = 10
+xp = 0
 
 
