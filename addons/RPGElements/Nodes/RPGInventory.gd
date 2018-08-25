@@ -191,8 +191,10 @@ func get_inv_name():
 func inv2dict():
 	var dict_inv = []
 	
-	for i in range(0, inv.size()):
+	var i = 0
+	while i < inv.size():
 		dict_inv.append(inst2dict(inv[i]))
+		i += 1
 
 	var dict = inst2dict(self)
 	dict["inv"] = dict_inv
@@ -202,23 +204,31 @@ func inv2dict():
 # Recibe un diccionario de inventario y devuelve una 
 # instancia de inventario.
 func dict2inv(_dict):
-	var inst_inv = dict2inst(_dict)
-	var items_array = []
+	var inst_items = []
 	
+	# Convertir los items a instancia
 	var i = 0
-	while i < inst_inv.get_inv().size():
-		items_array.append(inst_inv.get_inv()[i])
+	while i < _dict["inv"].size():
+		inst_items.append(dict2inst(_dict["inv"][i]))
 		i += 1
 	
-	inst_inv.get_inv().clear()
+	# Borrar los item del diccionario
+	var inv_dict = _dict["inv"]
+	_dict["inv"] = []
 	
+	# Convertir el diccionario principal a instancia
+	var inst_inv = dict2inst(_dict)
+	
+	# Volver el inventario al diccionario _dict
+	_dict["inv"] = inv_dict
+	
+	# Añadir los items a la instancia principal
 	i = 0
-	while i < items_array.size():
-		inst_inv.add_item(dict2inst(items_array[i]))
+	while i < inst_items.size():
+		inst_inv.add_item(inst_items[i])
 		i += 1
-		
+	
 	return inst_inv
 	
-
 # Métodos "Privados"
 #
