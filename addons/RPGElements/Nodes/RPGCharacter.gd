@@ -116,6 +116,7 @@ func add_hp(_hp):
 		emit_signal("add_hp")
 	else: # Significa que se esta añadiendo más hp de lo que se podría
 		hp = max_hp
+		emit_signal("add_hp")
 		emit_signal("full_hp")
 	
 func remove_hp(_hp):

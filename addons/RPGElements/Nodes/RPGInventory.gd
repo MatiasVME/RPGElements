@@ -170,6 +170,7 @@ func search_all_items_with_the_name(item_name):
 func delete_item(item):
 	if inv.has(item):
 		inv.erase(item)
+		item.queue_free()
 		emit_signal("item_removed")
 		return true
 		
@@ -194,6 +195,7 @@ func inv2dict():
 	var i = 0
 	while i < inv.size():
 		dict_inv.append(inst2dict(inv[i]))
+#		dict_inv[str(i)] = inst2dict(inv[i])
 		i += 1
 
 	var dict = inst2dict(self)
@@ -206,10 +208,12 @@ func inv2dict():
 func dict2inv(_dict):
 	var inst_items = []
 	
-	# Convertir los items a instancia
+	# Convertir los items a instancia y guardarlos
+	# en inst_items
 	var i = 0
 	while i < _dict["inv"].size():
 		inst_items.append(dict2inst(_dict["inv"][i]))
+#		inst_items[str(i)] = dict2inst(_dict["inv"].values()[i])
 		i += 1
 	
 	# Borrar los item del diccionario
@@ -227,6 +231,8 @@ func dict2inv(_dict):
 	while i < inst_items.size():
 		inst_inv.add_item(inst_items[i])
 		i += 1
+	
+	print("inst_inv.get_inv(): ", inst_inv.get_inv())
 	
 	return inst_inv
 	

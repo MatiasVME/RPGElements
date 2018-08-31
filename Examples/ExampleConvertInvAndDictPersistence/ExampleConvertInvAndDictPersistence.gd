@@ -25,6 +25,8 @@ func _ready():
 		
 		nueva_data_inv = inv.dict2inv(data["AllData"])
 		nueva_data_dict = nueva_data_inv.inv2dict()
+		
+		print("nueva_data_inv.get_inv(): ", nueva_data_inv.get_inv())
 	
 	persistence.save_data()
 	

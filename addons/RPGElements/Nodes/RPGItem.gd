@@ -42,6 +42,8 @@ export (int) var weight = 1 setget set_weight, get_weight
 export (int) var stack_max = 10
 var atributes = []
 
+signal use_item
+
 # Métodos Públicos y Setters/Getters
 #
 
@@ -49,6 +51,9 @@ func create_item(_item_name, _desc, _amount = 1):
 	item_name = _item_name
 	desc = _desc
 	amount = _amount
+
+func use():
+	emit_signal("use_item")
 
 func set_item_name(_item_name):
 	item_name = _item_name

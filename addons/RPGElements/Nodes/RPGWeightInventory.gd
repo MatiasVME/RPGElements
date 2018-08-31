@@ -42,7 +42,13 @@ func _ready():
 
 # NEEDTEST
 func add_item(item):
+	# Esto se deja por si el inventario esta vacio y
+	# el current_weight a cambiado.
+	if inv.size() == 0:
+		current_weight = 0
+	
 	if item == null:
+		print("item es nulo")
 		return false
 	
 	var total_weight = current_weight + item.weight * item.amount
