@@ -25,7 +25,7 @@ extends "RPGElement.gd"
 
 # Estos son las propiedades que deben ser asignadas a la interfaz:
 # transmitter_name : Es el nombre que emite el mensaje actual.
-# avatar : texture de avatar, imagen actual.
+# avatar : texture de avatar, imagen actual. (Debe de ser un Sprite)
 # text: texto actual. 
 var transmitter_name setget , get_transmitter_name
 var avatar setget , get_avatar
@@ -49,17 +49,18 @@ signal changed_text # OK
 signal updated_text # OK
 # Comienza el dialogo
 signal start_dialog # OK
+signal end_section # OK
 # Termina el dialogo
 signal end_dialog # OK
+signal empty_dialog
 
-# TODO
 var next_pressed = false
 
 func _ready():
 	timer = Timer.new()
 	add_child(timer)
 	timer.connect("timeout", self, "_on_Timer_timeout")
-	timer.wait_time = 0.01
+	timer.set_wait_time(0.01)
 	
 	if self.debug:
 		connect("changed_transmitter_name", self, "_on_changed_transmitter_name")
@@ -68,6 +69,10 @@ func _ready():
 		connect("updated_text", self, "_on_updated_text")
 		connect("start_dialog", self, "_on_start_dialog")
 		connect("end_dialog", self, "_on_end_dialog")
+		connect("end_section", self, "_on_end_section")
+		connect("empty_dialog", self, "_on_empty_dialog")
+		
+	set_process(true)
 
 func _process(delta):
 	if next_pressed:
@@ -110,6 +115,7 @@ func start_dialog():
 
 func next_pressed():
 	next_pressed = true
+	
 
 # Setters/Getters
 #
@@ -178,6 +184,13 @@ func next_dialog():
 
 func _on_Timer_timeout():
 	debug("_on_Timer_timeout")
+	
+	if dialogue.empty():
+		# Por algún motivo no lo puedo hacer finalizar
+#		is_finish = true
+#		timer.stop()
+		emit_signal("empty_dialog")
+		return
 
 	if next_dialog:
 		text_progress = ""
@@ -192,8 +205,11 @@ func _on_Timer_timeout():
 			emit_signal("changed_transmitter_name")
 		
 		if dialogue[index_dialog]["Avatar"] != null:
-			if avatar.texture != dialogue[index_dialog]["Avatar"]:
-				avatar.texture = dialogue[index_dialog]["Avatar"]
+			if avatar != null and avatar.get_texture() != dialogue[index_dialog]["Avatar"].get_texture():
+				avatar = dialogue[index_dialog]["Avatar"]
+				emit_signal("changed_avatar")
+			elif avatar == null:
+				avatar = dialogue[index_dialog]["Avatar"]
 				emit_signal("changed_avatar")
 	
 	if current_text.length() >= 1:
@@ -205,6 +221,7 @@ func _on_Timer_timeout():
 		index_dialog += 1
 		has_increased = true
 		next_dialog = true
+		emit_signal("end_section")
 
 	text = text_progress
 	emit_signal("updated_text")
@@ -231,3 +248,9 @@ func _on_start_dialog():
 	
 func _on_end_dialog():
 	debug("_on_end_dialog")
+	
+func _on_end_section():
+	debug("_on_end_section")
+	
+func _on_empty_dialog():
+	debug("_on_empty_dialog")
