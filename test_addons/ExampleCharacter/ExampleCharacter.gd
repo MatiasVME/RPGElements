@@ -27,5 +27,3 @@ func _ready():
 	
 	pedro.gain_xp(500)
 	
-	
-	
