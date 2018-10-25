@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://test_addons/ExampleCharacter/ExampleCharacter.gd" type="Script" id=1]
-[ext_resource path="res://addons/RPGElements/Nodes/RPGCharacter.gd" type="Script" id=2]
-[ext_resource path="res://addons/RPGElements/Icons/RPGCharacter.png" type="Texture" id=3]
+[ext_resource path="res://addons/rpg_elements/nodes/RPGCharacter.gd" type="Script" id=2]
+[ext_resource path="res://addons/rpg_elements/icons/RPGCharacter.png" type="Texture" id=3]
 
 [node name="ExampleCharacter" type="Node" index="0"]
 
@@ -16,12 +16,11 @@ __meta__ = {
 }
 debug = true
 player_name = null
-level = 0
+level = 1
 level_max = 30
 hp = 0
 max_hp = 10
 energy = 0
 max_energy = 10
-xp = 0
 
 

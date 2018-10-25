@@ -16,7 +16,7 @@ config/icon="res://OriginalImages/RPGElementsFull.png"
 
 [editor_plugins]
 
-enabled=PoolStringArray( "RPGElements" )
+enabled=PoolStringArray( "RPGElements", "rpg_elements" )
 
 [rendering]
 

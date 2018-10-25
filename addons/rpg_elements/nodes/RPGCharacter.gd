@@ -26,7 +26,7 @@ extends "RPGElement.gd"
 
 export (String) var player_name setget set_player_name, get_player_name
 
-export (int) var level = 0 setget get_level
+export (int) var level = 1 setget get_level
 export (int) var level_max = 30 setget get_level_max, set_level_max
 
 # Vitalidad
@@ -37,12 +37,12 @@ export (int) var energy = 0 setget set_energy, get_energy
 export (int) var max_energy = 10 setget set_max_energy, get_max_energy
 # var defense = 0 # TODO: Implementar defensa en un futuro
 
-export (int) var xp = 0
-# En xp_required 0 equivale a level 1
-var xp_required = [] setget , get_xp_required
+var xp = 0
+var xp_required = get_xp_required(level + 1)
+var xp_total = 0
 
 signal level_up
-signal get_xp
+signal gain_xp
 signal add_hp
 signal remove_hp
 signal full_hp
@@ -58,7 +58,7 @@ func _ready():
 	# Signals
 	if debug:
 		connect("level_up", self, "_on_level_up")
-		connect("get_xp", self, "_on_get_xp")
+		connect("gain_xp", self, "_on_gain_xp")
 		connect("add_hp", self, "_on_add_hp")
 		connect("remove_hp", self, "_on_remove_hp")
 		connect("full_hp", self, "_on_full_hp")
@@ -72,48 +72,23 @@ func _ready():
 # Métodos Públicos
 #
 
-func create_xp_curve(base_xp = 20.4, exponent = 1.05):
-	xp_required.clear()
+func gain_xp(amount):
+	xp_total += amount
+	xp += amount
 	
-	for i in range(1, level_max + 1):
-		xp_required.append(int(round(base_xp * (pow(float(i), exponent)))))
-	
-	debug(xp_required)
-
-# Añade xp y sube de nivel si es necesario
-func add_xp(_xp):
-	if xp_required.size() == 0:
-		.debug("Primero debes usar create_xp_curve()")
-		return
-	
-	var i = xp
-	while(i < xp + _xp):
-		if level >= level_max:
-			break
+	while xp >= xp_required:
+		xp -= xp_required
 		
-		if xp + _xp >= xp_required[level]:
-			if i != 0:
-				i += xp_required[level] - xp_required[level - 1]
-			else:
-				i += xp_required[level]
-				
-			level += 1
-			emit_signal("level_up")
-		else:
-			break
-		
-	xp += _xp
-	if _xp > 0:
-		emit_signal("get_xp")
-	.debug("XP: ", xp)
-
-# De momento solo remueve xp, no baja de nivel.
-func remove_xp(_xp):
-	if xp - _xp >= 0:
-		xp -= _xp
-	else:
-		xp = 0
+		level_up()
 	
+	emit_signal("gain_xp")
+
+func level_up():
+	level += 1
+	xp_required = get_xp_required(level + 1)
+	
+	emit_signal("level_up")
+
 func add_hp(_hp):
 	if hp + _hp < max_hp:
 		hp += _hp
@@ -159,11 +134,12 @@ func restore_hp():
 
 # Setters/Getters
 #
+
 func get_xp():
 	return xp
 
-func get_xp_required():
-	return xp_required
+func get_xp_required(_level):
+	return round(pow(_level, 1.8) + _level * 4)
 	
 func get_level():
 	return level
@@ -230,7 +206,7 @@ func _on_level_up():
 func _on_get_xp():
 	.debug("Obtener XP: ", xp)
 	
-func _on_add_hp():
+func _on_gain_xp():
 	.debug("Añadir HP: ", hp)
 	
 func _on_remove_hp():
