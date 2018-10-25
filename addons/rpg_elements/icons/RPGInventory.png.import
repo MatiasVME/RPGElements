@@ -2,12 +2,12 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/RPGCharacter.png-854cc31ed0c927f98ada7de376b9b940.stex"
+path="res://.import/RPGInventory.png-1d22491789dea81ca299b9c0085a2938.stex"
 
 [deps]
 
-source_file="res://addons/RPGElements/Icons/RPGCharacter.png"
-dest_files=[ "res://.import/RPGCharacter.png-854cc31ed0c927f98ada7de376b9b940.stex" ]
+source_file="res://addons/rpg_elements/icons/RPGInventory.png"
+dest_files=[ "res://.import/RPGInventory.png-1d22491789dea81ca299b9c0085a2938.stex" ]
 
 [params]
 
