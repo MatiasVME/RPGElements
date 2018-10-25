@@ -6,9 +6,11 @@ func _ready():
 	# Pedro es un player, podría también podría ser un character NPC
 	pedro.player_name = "Pedro"
 	
-	# Añade xp y sube de nivel, se genera una curva de experiencia
-	# automaticamente pero esta se puede editar. Por medio de:
-	# create_default_xp_curve(base_xp = 20.4, exponent = 1.05)
+	# SIMPRE, primero se debe crear una curva de experiencia,
+	# sino, no se puede añadir xp.
+	pedro.create_xp_curve()
+	
+	# Añade xp y sube de nivel
 	pedro.add_xp(100)
 	pedro.add_xp(10)
 	pedro.add_xp(1)

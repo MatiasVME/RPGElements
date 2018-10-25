@@ -82,6 +82,10 @@ func create_xp_curve(base_xp = 20.4, exponent = 1.05):
 
 # Añade xp y sube de nivel si es necesario
 func add_xp(_xp):
+	if xp_required.size() == 0:
+		.debug("Primero debes usar create_xp_curve()")
+		return
+	
 	var i = xp
 	while(i < xp + _xp):
 		if level >= level_max:

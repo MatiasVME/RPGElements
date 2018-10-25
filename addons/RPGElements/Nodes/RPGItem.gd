@@ -32,6 +32,10 @@ export (int) var amount = 1
 export (int) var buy_price = 100 setget set_buy_price, get_buy_price
 # Precio de venta de un item
 export (int) var sell_price = 50 setget set_sell_price, get_sell_price
+# Tipo (skin, pocion, libro, etc)
+export (int) var item_type = "" setget set_item_type, get_item_type
+# Por si tiene alguna data adiccional
+var extra_data setget set_extra_data, get_extra_data
 # Imagen del item
 var texture_path setget set_texture_path, get_texture_path
 
@@ -102,6 +106,18 @@ func get_atributes_to_print():
 		to_print += str(atributes[i][0], ": ", atributes[i][1], "\n")
 
 	return to_print
+
+func set_extra_data(data):
+	extra_data = data
+	
+func get_extra_data():
+	return extra_data
+
+func set_item_type(_item_type):
+	item_type = _item_type
+	
+func get_item_type():
+	return item_type
 
 # Métodos "Privados"
 #

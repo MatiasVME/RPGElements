@@ -1,12 +1,13 @@
-[gd_scene load_steps=8 format=1]
+[gd_scene load_steps=8 format=2]
 
-[ext_resource path="res://Examples/ExampleConvertInvAndDictPersistence/ExampleConvertInvAndDictPersistence.gd" type="Script" id=1]
+[ext_resource path="res://test_addons/ExampleConvertInvAndDictPersistence/ExampleConvertInvAndDictPersistence.gd" type="Script" id=1]
 [ext_resource path="res://addons/RPGElements/Nodes/RPGWeightInventory.gd" type="Script" id=2]
 [ext_resource path="res://addons/RPGElements/Icons/RPGWeightInventory.png" type="Texture" id=3]
 [ext_resource path="res://addons/RPGElements/Nodes/RPGItem.gd" type="Script" id=4]
 [ext_resource path="res://addons/RPGElements/Icons/RPGItem.png" type="Texture" id=5]
 [ext_resource path="res://addons/PersistenceNode/persistence_node.gd" type="Script" id=6]
 [ext_resource path="res://addons/PersistenceNode/icon.png" type="Texture" id=7]
+
 
 [node name="ExampleConvertInvAndDictPersistence" type="Node"]
 

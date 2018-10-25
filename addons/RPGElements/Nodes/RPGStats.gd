@@ -91,7 +91,6 @@ func get_stat_max_value(stat_name):
 	
 # Retorna el arreglo de la stat
 func get_stat(stat_name):
-	# range() no devuelve el último valor
 	for i in range(0, stats.size()):
 		if stats[i][0] == stat_name:
 			return stats[i] 
