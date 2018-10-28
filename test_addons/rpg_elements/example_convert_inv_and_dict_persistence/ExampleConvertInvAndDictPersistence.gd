@@ -6,7 +6,7 @@ onready var item1 = get_node("Item1")
 onready var item2 = get_node("Item2")
 
 # IMPORTANTE: Requiere plugin "PersistenceNode":
-# https://github.com/MatiasVME/Persistence/tree/for-godot-2.1
+# https://github.com/MatiasVME/Persistence/
 onready var persistence = get_node("Persistence")
 
 var data

@@ -11,8 +11,8 @@ config_version=3
 [application]
 
 config/name="RPGElements"
-run/main_scene="res://Examples/Main.tscn"
-config/icon="res://OriginalImages/RPGElementsFull.png"
+run/main_scene="res://test_addons/rpg_elements/example_dialog/ExampleDialog.tscn"
+config/icon="res://original_images/RPGElementsFull.png"
 
 [editor_plugins]
 

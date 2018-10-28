@@ -55,7 +55,7 @@ signal no_energy
 # signal remove_defense # TODO
 
 func _ready():
-	# Signals
+	# Señales si esta en modo debug
 	if debug:
 		connect("level_up", self, "_on_level_up")
 		connect("gain_xp", self, "_on_gain_xp")

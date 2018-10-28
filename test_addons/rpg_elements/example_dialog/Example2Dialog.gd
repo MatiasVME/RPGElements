@@ -6,8 +6,9 @@ func _ready():
 	$RPGDialog.connect("updated_text", self, "_on_udated_text")
 	$RPGDialog.connect("start_dialog", self, "_on_start_dialog")
 	$RPGDialog.connect("end_dialog", self, "_on_end_dialog")
+	$RPGDialog.connect("changed_text", self, "_on_change_text")
+	$RPGDialog.connect("end_section", self, "_on_end_section")
 	
-	$RPGDialog.add_section("Pedro", "TEST123")
 	$RPGDialog.add_section("Pedro", "Hola estimado ¿Cómo ha estado?")
 	$RPGDialog.add_section("Juan", "Hola ¿Qué tal?, ¿Bién y usted?")
 	$RPGDialog.add_section("Pedro", "Bién acá programando un juego")
@@ -31,9 +32,11 @@ func _on_end_dialog():
 func _on_Delay_timeout():
 	$RPGDialog.start_dialog()
 	
-func _on_changed_avatar():
-	# TODO: hacer que cambie el avatar también
-	return
+func _on_change_text():
+	$Dialog/Button.disabled = true
 
 func _on_Button_pressed():
 	$RPGDialog.next_pressed()
+
+func _on_end_section():
+	$Dialog/Button.disabled = false
