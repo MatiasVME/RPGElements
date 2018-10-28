@@ -156,17 +156,10 @@ func add_energy(_energy):
 	if is_dead:
 		.debug("El character esta muerto requiere ser revivido")
 		return
-	
-#	if energy + _energy < max_energy:
-#		energy += _energy
-#		emit_signal("add_energy")
-#	else:
-#		energy = max_energy
-#		emit_signal("full_energy")
 
 	if energy + _energy < max_energy:
 		energy += _energy
-		emit_signal("add_energy")
+		emit_signal("add_energy", _energy)
 	else: # Significa que se esta añadiendo más hp de lo que se podría
 		if energy == max_energy:
 			.debug("No se puede añadir mas Energy ya que esta llena.")
@@ -303,7 +296,7 @@ func _on_full_energy():
 	.debug("Estas lleno de energía: ", energy)
 	
 func _on_no_energy():
-	.debug("No queda energía: ", energy)
+	.debug("No queda energía")
 
 func _on_add_hp(amount):
 	.debug("HP Añadido [", amount, "]")

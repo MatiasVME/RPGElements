@@ -22,21 +22,21 @@ func _ready():
 	
 	print("HP actual: ", pedro.hp)
 	pedro.remove_hp(5) # OK
-	pedro.add_hp(1)
-	pedro.add_hp(50) # OK
+	pedro.add_hp(1) # OK
+	pedro.add_hp(100) # OK
 	pedro.add_hp(10) # OK
 	pedro.remove_hp(9) # OK
-	pedro.add_hp(100) # OK
+	pedro.add_hp(1000) # OK
 	print("HP actual: ", pedro.hp)
 
 	# Energía
 	#
 
 	print("energy actual: ", pedro.energy)
-	pedro.remove_energy(5) # 
-	pedro.add_energy(1)
-	pedro.add_energy(50) # 
-	pedro.add_energy(10) # 
-	pedro.remove_energy(9) #
-	pedro.add_energy(100) # 
+	pedro.remove_energy(5) # OK
+	pedro.add_energy(1) # OK
+	pedro.add_energy(100) # OK
+	pedro.add_energy(10) # OK
+	pedro.remove_energy(9) # OK
+	pedro.add_energy(1000) # OK
 	print("energy actual: ", pedro.energy)
