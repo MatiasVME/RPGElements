@@ -33,7 +33,7 @@ export (int) var level_max = 30 setget get_level_max, set_level_max
 export (int) var hp = 10 setget set_hp, get_hp
 export (int) var max_hp = 10 setget set_max_hp, get_max_hp
 # Mana
-export (int) var energy = 0 setget set_energy, get_energy
+export (int) var energy = 10 setget set_energy, get_energy
 export (int) var max_energy = 10 setget set_max_energy, get_max_energy
 # var defense = 0 # TODO: Implementar defensa en un futuro
 
@@ -58,8 +58,8 @@ signal remove_hp(amount)
 signal full_hp
 signal dead
 signal revive
-signal add_energy
-signal remove_energy
+signal add_energy(amount)
+signal remove_energy(amount)
 signal full_energy
 signal no_energy
 # signal add_defense # TODO
@@ -112,7 +112,8 @@ func add_hp(_hp):
 	if hp + _hp < max_hp:
 		hp += _hp
 		emit_signal("add_hp", _hp)
-	else: # Significa que se esta añadiendo más hp de lo que se podría
+	# Significa que se esta añadiendo más hp de lo que se podría
+	else: 
 		if hp == max_hp:
 			.debug("No se puede añadir mas HP ya que esta lleno.")
 			emit_signal("full_hp")
@@ -156,27 +157,41 @@ func add_energy(_energy):
 		.debug("El character esta muerto requiere ser revivido")
 		return
 	
+#	if energy + _energy < max_energy:
+#		energy += _energy
+#		emit_signal("add_energy")
+#	else:
+#		energy = max_energy
+#		emit_signal("full_energy")
+
 	if energy + _energy < max_energy:
 		energy += _energy
 		emit_signal("add_energy")
-	else:
+	else: # Significa que se esta añadiendo más hp de lo que se podría
+		if energy == max_energy:
+			.debug("No se puede añadir mas Energy ya que esta llena.")
+			emit_signal("full_energy")
+			return
+		
+		emit_signal("add_energy", _energy - (_energy - energy))
 		energy = max_energy
 		emit_signal("full_energy")
-
+	
 func remove_energy(_energy):
 	if is_dead:
-		.debug("El character esta muerto requiere ser revivido")
+		.debug("remove_energy(): El character esta muerto requiere ser revivido")
 		return
 	
-	if _energy > 0:
-		if energy - _energy > 0:
-			energy -= _energy
-			emit_signal("remove_energy")
-		else:
-			energy = 0
-			emit_signal("no_energy")
+	if not _energy > 0:
+		.debug("No se puede eliminar esa cantidad de Energy")
+		return
+	
+	if energy - _energy > 0:
+		emit_signal("remove_energy", _energy)
+		energy -= _energy
 	else:
-		.debug("No se puede eliminar esa cantidad de energía")
+		emit_signal("remove_hp", _energy - (_energy - energy))
+		energy = 0
 
 func restore_hp():
 	if is_dead:
@@ -278,11 +293,11 @@ func _on_dead():
 func _on_revive():
 	.debug("Has revivido")
 
-func _on_add_energy():
-	.debug("Añadir energía: ", energy)
+func _on_add_energy(amount):
+	.debug("Añadir energía [", amount, "]")
 
-func _on_remove_energy():
-	.debug("Eliminar energía: ", energy)
+func _on_remove_energy(amount):
+	.debug("Eliminar energía [", amount, "]")
 	
 func _on_full_energy():
 	.debug("Estas lleno de energía: ", energy)

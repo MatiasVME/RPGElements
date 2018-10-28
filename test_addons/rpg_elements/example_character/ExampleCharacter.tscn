@@ -20,7 +20,7 @@ level = 1
 level_max = 30
 hp = 10
 max_hp = 10
-energy = 0
+energy = 10
 max_energy = 10
 
 
