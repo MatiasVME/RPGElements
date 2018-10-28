@@ -30,12 +30,15 @@ export (int) var level = 1 setget get_level
 export (int) var level_max = 30 setget get_level_max, set_level_max
 
 # Vitalidad
-export (int) var hp = 10 setget set_hp, get_hp
-export (int) var max_hp = 10 setget set_max_hp, get_max_hp
+export (int) var hp = 20 setget set_hp, get_hp
+export (int) var max_hp = 20 setget set_max_hp, get_max_hp
 # Mana
-export (int) var energy = 10 setget set_energy, get_energy
-export (int) var max_energy = 10 setget set_max_energy, get_max_energy
-# var defense = 0 # TODO: Implementar defensa en un futuro
+export (int) var energy = 20 setget set_energy, get_energy
+export (int) var max_energy = 20 setget set_max_energy, get_max_energy
+# 0% de defense
+export (int) var defense_rate = 0 setget set_defense, get_defense
+# TODO: Implementar escudo
+# export (int) var shield
 
 var xp = 0
 var xp_required = get_xp_required(level + 1)
@@ -122,7 +125,13 @@ func add_hp(_hp):
 		emit_signal("add_hp", _hp - (_hp - hp))
 		hp = max_hp
 		emit_signal("full_hp")
-	
+
+# No ignora la defensa
+func damage(_hp):
+	var damage = _hp - (_hp * defense_rate / 100)
+	remove_hp(int(float(damage)))
+
+# Ignora la defensa
 func remove_hp(_hp):
 	if is_dead:
 		.debug("remove_hp(): El character esta muerto requiere ser revivido")
@@ -258,6 +267,12 @@ func set_max_energy(_max_energy):
 	
 func get_max_energy():
 	return max_energy
+	
+func set_defense(_defense):
+	defense_rate = _defense
+	
+func get_defense():
+	return defense_rate
 
 # Métodos "Privados"
 #

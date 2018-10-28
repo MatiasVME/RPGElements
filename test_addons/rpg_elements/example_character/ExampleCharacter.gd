@@ -40,3 +40,13 @@ func _ready():
 	pedro.remove_energy(9) # OK
 	pedro.add_energy(1000) # OK
 	print("energy actual: ", pedro.energy)
+	
+	# Damage (recibe daño, toma en cuenta la defensa)
+	# 
+	
+	print(pedro.get_defense())
+	pedro.damage(1)
+	pedro.damage(5)
+	pedro.damage(10)
+	pedro.damage(20)
+	pedro.damage(30)
