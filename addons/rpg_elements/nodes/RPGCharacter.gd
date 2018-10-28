@@ -30,7 +30,7 @@ export (int) var level = 1 setget get_level
 export (int) var level_max = 30 setget get_level_max, set_level_max
 
 # Vitalidad
-export (int) var hp = 0 setget set_hp, get_hp
+export (int) var hp = 10 setget set_hp, get_hp
 export (int) var max_hp = 10 setget set_max_hp, get_max_hp
 # Mana
 export (int) var energy = 0 setget set_energy, get_energy
@@ -41,12 +41,23 @@ var xp = 0
 var xp_required = get_xp_required(level + 1)
 var xp_total = 0
 
-signal level_up
-signal gain_xp
-signal add_hp
-signal remove_hp
+# Previene que muera más de una vez. Esto hace que el player
+# no pueda ganar/perder vida/energía cuando esta muerto.
+# Para revivirlo se debe utilizar revive().
+# El character si puede ganar experiencia cuando esta muerto,
+# la razón es que a veces se da experiencia al jugador cuando
+# no se esta en la pantalla de juego. 
+var is_dead = false
+
+signal level_up(current_level)
+signal add_xp(amount)
+# El amount es la cantidad que se añadió, no siempre es la
+# cantidad enviada por medio de "add_hp(amount)"
+signal add_hp(amount)
+signal remove_hp(amount)
 signal full_hp
 signal dead
+signal revive
 signal add_energy
 signal remove_energy
 signal full_energy
@@ -58,11 +69,12 @@ func _ready():
 	# Señales si esta en modo debug
 	if debug:
 		connect("level_up", self, "_on_level_up")
-		connect("gain_xp", self, "_on_gain_xp")
+		connect("add_xp", self, "_on_add_xp")
 		connect("add_hp", self, "_on_add_hp")
 		connect("remove_hp", self, "_on_remove_hp")
 		connect("full_hp", self, "_on_full_hp")
 		connect("dead", self, "_on_dead")
+		connect("revive", self, "_on_revive")
 		connect("add_energy", self, "_on_add_energy")
 		connect("remove_energy", self, "_on_remove_energy")
 		connect("full_energy", self, "_on_full_energy")
@@ -72,7 +84,12 @@ func _ready():
 # Métodos Públicos
 #
 
-func gain_xp(amount):
+func add_xp(amount):
+	# TODO: Falta delimitar la xp máxima y el nivel
+	#   máximo.
+	
+	emit_signal("add_xp", amount)
+	
 	xp_total += amount
 	xp += amount
 	
@@ -80,36 +97,65 @@ func gain_xp(amount):
 		xp -= xp_required
 		
 		level_up()
-	
-	emit_signal("gain_xp")
 
 func level_up():
 	level += 1
 	xp_required = get_xp_required(level + 1)
 	
-	emit_signal("level_up")
+	emit_signal("level_up", level)
 
 func add_hp(_hp):
+	if is_dead:
+		.debug("add_hp(): El character esta muerto requiere ser revivido")
+		return
+		
 	if hp + _hp < max_hp:
 		hp += _hp
-		emit_signal("add_hp")
+		emit_signal("add_hp", _hp)
 	else: # Significa que se esta añadiendo más hp de lo que se podría
+		if hp == max_hp:
+			.debug("No se puede añadir mas HP ya que esta lleno.")
+			emit_signal("full_hp")
+			return
+		
+		emit_signal("add_hp", _hp - (_hp - hp))
 		hp = max_hp
-		emit_signal("add_hp")
 		emit_signal("full_hp")
 	
 func remove_hp(_hp):
-	if _hp > 0:
-		if hp - _hp > 0:
-			hp -= _hp
-			emit_signal("remove_hp")
-		else:
-			hp = 0
-			emit_signal("dead")
-	else:
-		.debug("No se puede eliminar esa cantidad de HP")
+	if is_dead:
+		.debug("remove_hp(): El character esta muerto requiere ser revivido")
+		return
 	
+	if not _hp > 0:
+		.debug("No se puede eliminar esa cantidad de HP")
+		return
+	
+	if hp - _hp > 0:
+		emit_signal("remove_hp", _hp)
+		hp -= _hp
+	else:
+		emit_signal("remove_hp", _hp - (_hp - hp))
+		
+		hp = 0
+		
+		# Previene que muera más de una vez
+		if not is_dead:
+			emit_signal("dead")
+		
+		is_dead = true
+
+func revive():
+	is_dead = false
+	
+	emit_signal("revive")
+	restore_hp()
+
 func add_energy(_energy):
+	if is_dead:
+		.debug("El character esta muerto requiere ser revivido")
+		return
+	
 	if energy + _energy < max_energy:
 		energy += _energy
 		emit_signal("add_energy")
@@ -118,6 +164,10 @@ func add_energy(_energy):
 		emit_signal("full_energy")
 
 func remove_energy(_energy):
+	if is_dead:
+		.debug("El character esta muerto requiere ser revivido")
+		return
+	
 	if _energy > 0:
 		if energy - _energy > 0:
 			energy -= _energy
@@ -129,6 +179,10 @@ func remove_energy(_energy):
 		.debug("No se puede eliminar esa cantidad de energía")
 
 func restore_hp():
+	if is_dead:
+		.debug("El character esta muerto requiere ser revivido")
+		return
+	
 	hp = max_hp
 	emit_signal("full_hp")
 
@@ -197,26 +251,32 @@ func set_max_energy(_max_energy):
 func get_max_energy():
 	return max_energy
 
+# Métodos "Privados"
+#
+
 # Señales
 #
 
-func _on_level_up():
-	.debug("Has subido de nivel!!: ", level)
+func _on_add_xp(amount):
+	.debug("Añadir XP [", amount, "]")
+
+func _on_level_up(current_level):
+	.debug("Has subido de nivel!! [", current_level, "]")
 	
 func _on_get_xp():
 	.debug("Obtener XP: ", xp)
 	
-func _on_gain_xp():
-	.debug("Añadir HP: ", hp)
-	
-func _on_remove_hp():
-	.debug("Eliminar HP: ", hp)
+func _on_remove_hp(amount):
+	.debug("Eliminar HP [", amount, "]")
 	
 func _on_full_hp():
 	.debug("HP esta lleno: ", hp)
 	
 func _on_dead():
 	.debug("Has muerto: ", hp)
+	
+func _on_revive():
+	.debug("Has revivido")
 
 func _on_add_energy():
 	.debug("Añadir energía: ", energy)
@@ -230,5 +290,5 @@ func _on_full_energy():
 func _on_no_energy():
 	.debug("No queda energía: ", energy)
 
-# Métodos "Privados"
-#
+func _on_add_hp(amount):
+	.debug("HP Añadido [", amount, "]")
