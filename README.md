@@ -1,5 +1,7 @@
 # RPGElements [WIP]
 
+![logo](https://github.com/MatiasVME/RPGElements/blob/master/original_images/RPGElementsFull.png)
+
 [Work In Progress] RPGElements es un plugin que facilita la lógica para crear juegos RPG a través de nodos personalizados
 
 ## Resumen
@@ -14,19 +16,19 @@ El proyecto es usable, aunque hay algunos nodos que no estan muy testeados y tam
 
 En su mayor parte los nodos personalizados son usables. A continuación se dice el estado de los nodos:
 
-![text](addons/icons/RPGCharacter.png) **RPGCharacter:** Muy usable
+![](https://github.com/MatiasVME/RPGElements/blob/master/addons/rpg_elements/icons/RPGCharacter.png) **RPGCharacter:** Muy usable
 
-![text]() **RPGDialog:** Muy usable
+![](https://github.com/MatiasVME/RPGElements/blob/master/addons/rpg_elements/icons/RPGDialog.png) **RPGDialog:** Muy usable
 
-![text]() **RPGInventory:** Usable, aunque contiene métodos no testeados y incompletos.
+![](https://github.com/MatiasVME/RPGElements/blob/master/addons/rpg_elements/icons/RPGInventory.png) **RPGInventory:** Usable, aunque contiene métodos no testeados y incompletos.
 
-![text]() **RPGItem:** Muy usable
+![](https://github.com/MatiasVME/RPGElements/blob/master/addons/rpg_elements/icons/RPGItem.png) **RPGItem:** Muy usable
 
-![text]() **RPGSlotInventory:** No creado aún
+![](https://github.com/MatiasVME/RPGElements/blob/master/addons/rpg_elements/icons/RPGSlotInventory.png) **RPGSlotInventory:** No creado aún
 
-![text]() **RPGStats:** Muy usable
+![](https://github.com/MatiasVME/RPGElements/blob/master/addons/rpg_elements/icons/RPGStats.png) **RPGStats:** Muy usable
 
-![text]() **RPGWeightInventory:** Usable, aunque contiene métodos no testeados y incompletos.
+![](https://github.com/MatiasVME/RPGElements/blob/master/addons/rpg_elements/icons/RPGWeightInventory.png) **RPGWeightInventory:** Usable, aunque contiene métodos no testeados y incompletos.
 
 ## Instalación y uso
 
