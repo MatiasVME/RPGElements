@@ -1,6 +1,6 @@
 # RPGElements [WIP]
 
-![logo](https://github.com/MatiasVME/RPGElements/blob/master/original_images/RPGElementsFull.png)
+![logo](https://github.com/MatiasVME/RPGElements/blob/master/images/RPGElementsFull.png)
 
 [Work In Progress] RPGElements es un plugin que facilita la lógica para crear juegos RPG a través de nodos personalizados
 
@@ -24,11 +24,11 @@ En su mayor parte los nodos personalizados son usables. A continuación se dice 
 
 ![](https://github.com/MatiasVME/RPGElements/blob/master/addons/rpg_elements/icons/RPGItem.png) **RPGItem:** Muy usable
 
-![](https://github.com/MatiasVME/RPGElements/blob/master/addons/rpg_elements/icons/RPGSlotInventory.png) **RPGSlotInventory:** No creado aún
-
 ![](https://github.com/MatiasVME/RPGElements/blob/master/addons/rpg_elements/icons/RPGStats.png) **RPGStats:** Muy usable
 
 ![](https://github.com/MatiasVME/RPGElements/blob/master/addons/rpg_elements/icons/RPGWeightInventory.png) **RPGWeightInventory:** Usable, aunque contiene métodos no testeados y incompletos.
+
+![](https://github.com/MatiasVME/RPGElements/blob/master/addons/rpg_elements/icons/RPGSlotInventory.png) **RPGSlotInventory:** No creado aún
 
 ## Instalación y uso
 
@@ -113,6 +113,8 @@ signal no_energy
 ### RPGDialog
 
 RPGDialog es un nodo personalizado que gestiona dialogos, se encarga de escribir letra por letra (Como una máquina de escribir) y emite señales por cada evento importante que pase.
+
+![](https://github.com/MatiasVME/RPGElements/blob/master/images/animations/RPGDialog.gif)
 
 Tomando en cuenta que usted añadión RPGDialog a la escena, a continuación un ejemplo:
 
