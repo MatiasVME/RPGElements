@@ -36,7 +36,7 @@ export (int) var max_hp = 20 setget set_max_hp, get_max_hp
 export (int) var energy = 20 setget set_energy, get_energy
 export (int) var max_energy = 20 setget set_max_energy, get_max_energy
 # 0% de defense
-export (int) var defense_rate = 0 setget set_defense, get_defense
+export (int) var defense_rate = 0 setget set_defense_rate, get_defense_rate
 # TODO: Implementar escudo
 # export (int) var shield
 
@@ -88,8 +88,9 @@ func _ready():
 #
 
 func add_xp(amount):
-	# TODO: Falta delimitar la xp máxima y el nivel
-	#   máximo.
+	if level >= level_max:
+		.debug("Esta en el máximo nivel, la experiencia no fue añadida")
+		return
 	
 	emit_signal("add_xp", amount)
 	
@@ -99,7 +100,10 @@ func add_xp(amount):
 	while xp >= xp_required:
 		xp -= xp_required
 		
-		level_up()
+		if level < level_max:
+			level_up()
+		else:
+			break
 
 func level_up():
 	level += 1
@@ -156,6 +160,9 @@ func remove_hp(_hp):
 		is_dead = true
 
 func revive():
+	if not is_dead:
+		.debug("Ya esta vivo")
+	
 	is_dead = false
 	
 	emit_signal("revive")
@@ -268,10 +275,10 @@ func set_max_energy(_max_energy):
 func get_max_energy():
 	return max_energy
 	
-func set_defense(_defense):
+func set_defense_rate(_defense):
 	defense_rate = _defense
 	
-func get_defense():
+func get_defense_rate():
 	return defense_rate
 
 # Métodos "Privados"

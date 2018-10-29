@@ -10,6 +10,7 @@ func _ready():
 	pedro.add_xp(1)
 	pedro.add_xp(10)
 	pedro.add_xp(100)
+#	pedro.add_xp(10000) # Para testear el último nivel
 	
 	# HP
 	#
@@ -44,9 +45,8 @@ func _ready():
 	# Damage (recibe daño, toma en cuenta la defensa)
 	# 
 	
-	print(pedro.get_defense())
 	pedro.damage(1)
+	pedro.damage(3)
 	pedro.damage(5)
-	pedro.damage(10)
-	pedro.damage(20)
+	pedro.set_defense_rate(50)
 	pedro.damage(30)
