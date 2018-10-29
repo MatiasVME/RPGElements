@@ -16,7 +16,7 @@ config/icon="res://original_images/RPGElementsFull.png"
 
 [editor_plugins]
 
-enabled=PoolStringArray( "RPGElements", "rpg_elements" )
+enabled=PoolStringArray( "PersistenceNode", "rpg_elements" )
 
 [rendering]
 

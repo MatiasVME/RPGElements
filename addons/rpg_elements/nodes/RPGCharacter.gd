@@ -65,6 +65,7 @@ signal add_energy(amount)
 signal remove_energy(amount)
 signal full_energy
 signal no_energy
+# TODO: Falta implementar los métodos add_defense, remove_defense
 # signal add_defense # TODO
 # signal remove_defense # TODO
 
@@ -162,6 +163,7 @@ func remove_hp(_hp):
 func revive():
 	if not is_dead:
 		.debug("Ya esta vivo")
+		return
 	
 	is_dead = false
 	

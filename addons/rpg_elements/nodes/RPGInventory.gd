@@ -26,8 +26,6 @@ extends "RPGElement.gd"
 var inv = [] setget , get_inv
 export (String) var inv_name = "" setget set_inv_name, get_inv_name
 
-#onready var void_item = preload("res://addons/RPGElements/Nodes/RPGItem.gd").new()
-
 signal item_added
 signal item_removed
 signal item_taken
@@ -84,7 +82,7 @@ func take_item(item, amount = 1):
 		return new_item
 
 # TODO: Toma el item del inventario (lo remueve del inventario y lo
-# retorna) TODO
+# retorna) TODO (NO USE)
 func take_item_by_name(item_name, amount = 1):
 	var items_to_taken = []
 	
@@ -195,7 +193,6 @@ func inv2dict():
 	var i = 0
 	while i < inv.size():
 		dict_inv.append(inst2dict(inv[i]))
-#		dict_inv[str(i)] = inst2dict(inv[i])
 		i += 1
 
 	var dict = inst2dict(self)
@@ -213,7 +210,6 @@ func dict2inv(_dict):
 	var i = 0
 	while i < _dict["inv"].size():
 		inst_items.append(dict2inst(_dict["inv"][i]))
-#		inst_items[str(i)] = dict2inst(_dict["inv"].values()[i])
 		i += 1
 	
 	# Borrar los item del diccionario
@@ -231,8 +227,6 @@ func dict2inv(_dict):
 	while i < inst_items.size():
 		inst_inv.add_item(inst_items[i])
 		i += 1
-	
-	print("inst_inv.get_inv(): ", inst_inv.get_inv())
 	
 	return inst_inv
 	

@@ -186,9 +186,6 @@ func _on_Timer_timeout():
 	debug("_on_Timer_timeout")
 	
 	if dialogue.empty():
-		# Por algún motivo no lo puedo hacer finalizar
-#		is_finish = true
-#		timer.stop()
 		emit_signal("empty_dialog")
 		return
 

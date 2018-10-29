@@ -4,7 +4,7 @@
 [ext_resource path="res://addons/rpg_elements/nodes/RPGCharacter.gd" type="Script" id=2]
 [ext_resource path="res://addons/rpg_elements/icons/RPGCharacter.png" type="Texture" id=3]
 
-[node name="ExampleCharacter" type="Node" index="0"]
+[node name="ExampleCharacter" type="Node"]
 
 script = ExtResource( 1 )
 

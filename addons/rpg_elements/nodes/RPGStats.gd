@@ -94,7 +94,7 @@ func get_stat(stat_name):
 	for i in range(0, stats.size()):
 		if stats[i][0] == stat_name:
 			return stats[i] 
-
+	
 	.debug("No se ecuentra stat_name: ", stat_name)
 
 func get_stats():

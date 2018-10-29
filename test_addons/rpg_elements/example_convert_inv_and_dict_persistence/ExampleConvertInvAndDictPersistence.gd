@@ -7,6 +7,7 @@ onready var item2 = get_node("Item2")
 
 # IMPORTANTE: Requiere plugin "PersistenceNode":
 # https://github.com/MatiasVME/Persistence/
+# Debe borrar y añadir el nodo Persistence al ejemplo.
 onready var persistence = get_node("Persistence")
 
 var data
