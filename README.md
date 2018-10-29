@@ -71,9 +71,9 @@ func _ready():
 	#
 	
 	$RPGCharacter.remove_hp(3)
-    $RPGCharacter.remove_hp(100)
+	$RPGCharacter.remove_hp(100)
 	$RPGCharacter.revive()
-    $RPGCharacter.remove_hp(5)
+	$RPGCharacter.remove_hp(5)
 	$RPGCharacter.add_hp(1)
 	$RPGCharacter.add_hp(5)
 
@@ -122,7 +122,7 @@ Tomando en cuenta que usted añadión RPGDialog a la escena, a continuación un 
 extends Node
 
 func _ready():
-    # Estas mismas señales se pueden añadir desde el editor
+	# Estas mismas señales se pueden añadir desde el editor
 	$RPGDialog.connect("changed_transmitter_name", self, "_on_changed_transmitter_name")
 	$RPGDialog.connect("changed_avatar", self, "_on_changed_avatar")
 	$RPGDialog.connect("updated_text", self, "_on_udated_text")
@@ -166,3 +166,27 @@ func _on_end_section():
 ```
 
 Puede ver este ejemplo ya funcionando en el directorio **test_addons/rpg_elements/example_dialog/**
+
+### RPGInventory
+
+RPGInventory de momento no se documentará ya que puede sufrir cambios importantes.
+
+Mas información ver el archivo: **addons/rpg_elements/nodes/RPGInventory**
+
+### RPGWeightInventory
+
+RPGWeightInventory de momento no se documentará ya que puede sufrir cambios importantes.
+
+Mas información ver el archivo: **addons/rpg_elements/nodes/RPGWeightInventory**
+
+### RPGItem
+
+RPGItem representa un item que puede ser añadido a un inventario.
+
+Mas información ver el archivo: **addons/rpg_elements/nodes/RPGItem**
+
+### RPGStats
+
+RPGStats es un sistema muy simple de habilidades
+
+Mas información ver el archivo: **addons/rpg_elements/nodes/RPGStats**
