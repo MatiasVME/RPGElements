@@ -51,14 +51,23 @@ func remove_points(_points):
 		points -= _points
 	else:
 		.debug("_points debe ser mayor que 0")
-
-# Toma puntos de points y los añade a x stat
-func add_points_to_stat(cant, stat_name):
-	if cant <= points:
-		points -= cant
-		get_stat(stat_name)[1] += cant
+		
+# Toma puntos de points y los añade a x stat, devuelve true o false
+# si la añade o no.
+func add_points_to_stat(amount, stat_name):
+	if can_add_points_to_stat(stat_name, amount):
+		points -= amount
+		get_stat(stat_name)[1] += amount
 	else:
-		.debug("La cantidad dada, supera a la cantidad de puntos")
+		.debug("No se pudieron añadir puntos a la stat")
+
+# Pregunta si se puede añadir puntos a x stat. Dependiendo de los
+# points y el máximo de puntos que puede tener una stat.
+func can_add_points_to_stat(stat_name, amount = 1):
+	if amount <= points and amount + get_stat_value(stat_name) <= get_stat_max_value(stat_name):
+		return true
+	else:
+		return false
 
 # Quita puntos a una stat y los guarda en points
 func remove_points_to_stat(cant, stat_name):
@@ -68,7 +77,7 @@ func remove_points_to_stat(cant, stat_name):
 		stat[1] -= cant
 		points += cant
 	else:
-		.debug("No se puede remover esa cantidad de puntos      ")
+		.debug("No se puede remover esa cantidad de puntos")
 
 # Borra todas las stats
 func clear_stats():

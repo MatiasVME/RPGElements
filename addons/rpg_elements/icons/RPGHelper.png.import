@@ -2,29 +2,27 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/RPGItem.png-5b63cd6443091a30445d945f17c6c614.stex"
+path="res://.import/RPGHelper.png-92facb7ec3b1ead21fd1934e0f055b94.stex"
 
 [deps]
 
-source_file="res://addons/rpg_elements/icons/RPGItem.png"
-dest_files=[ "res://.import/RPGItem.png-5b63cd6443091a30445d945f17c6c614.stex" ]
+source_file="res://addons/rpg_elements/icons/RPGHelper.png"
+dest_files=[ "res://.import/RPGHelper.png-92facb7ec3b1ead21fd1934e0f055b94.stex" ]
 
 [params]
 
 compress/mode=0
 compress/lossy_quality=0.7
 compress/hdr_mode=0
-compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=true
+flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2
 process/fix_alpha_border=true
 process/premult_alpha=false
 process/HDR_as_SRGB=false
-process/invert_color=false
 stream=false
 size_limit=0
 detect_3d=true

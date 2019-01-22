@@ -38,7 +38,6 @@ func _ready():
 # Métodos Públicos y Setters/Getters
 #
 
-# NEEDTEST
 func add_item(item):
 	# Esto se deja por si el inventario esta vacio y
 	# el current_weight a cambiado.
@@ -49,9 +48,9 @@ func add_item(item):
 		print("item es nulo")
 		return false
 	
-	var total_weight = current_weight + item.weight * item.amount
+	if can_add_item(item):
+		var total_weight = (current_weight + item.weight) * item.amount
 	
-	if total_weight < max_weight:
 		current_weight += item.weight * item.amount
 		.add_item(item)
 		
@@ -63,6 +62,12 @@ func add_item(item):
 	else:
 		return false
 
+# Puede ser añadido el item, dependiendo de su peso?
+func can_add_item(item):
+	if (item.weight + current_weight) * item.amount <= max_weight:
+		return true
+	return false
+
 # NEEDTEST
 func take_item_by_id(id):
 	for i in range(0, inv.size()):
@@ -71,6 +76,15 @@ func take_item_by_id(id):
 			break
 	
 	return .take_item_by_id(id)
+
+func take_item(item, amount = 1):
+	var item_taken = .take_item(item, amount)
+	
+	if item_taken:
+		current_weight -= item.weight * item.amount
+		return item_taken
+	else:
+		return
 
 # Borra un item devuelve si lo elimina o no
 # NEEDTEST
@@ -97,7 +111,7 @@ func is_full():
 	return inventory_full
 
 func set_max_weight(_max_weight):
-	if _max_weight < current_weight:
+	if _max_weight > current_weight:
 		max_weight = _max_weight
 		return true
 	else:

@@ -18,21 +18,25 @@
 # AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-# SOFTWARE.
+# SOFTWARE. 
 
-extends Node
+extends "RPGElement.gd"
 
-export (bool) var debug = false
+func get_inst_character():
+	return load("res://addons/rpg_elements/nodes/RPGCharacter.gd").new()
+	
+func get_inst_dialog():
+	return load("res://addons/rpg_elements/nodes/RPGDialog.gd").new()
 
-func debug(message, something1 = "", something2 = ""):
-	if debug:
-		print("[RPGElements] ", message, " ", something1, " ", something2)
-
-# Función para convertir la extención .gdc a .gd
-func gdc2gd(dict):
-	if typeof(dict) == TYPE_DICTIONARY and dict.has("@path"):
-		dict["@path"] = dict["@path"].replace('.gdc', '.gd')
-		return dict
-	else:
-		debug("gdc2gd(): No es un diccionario o no se encuentra el path")
-		return dict
+func get_inst_inventory():
+	return load("res://addons/rpg_elements/nodes/RPGInventory.gd").new()
+	
+func get_inst_item():
+	return load("res://addons/rpg_elements/nodes/RPGItem.gd").new()
+	
+func get_inst_stats():
+	return load("res://addons/rpg_elements/nodes/RPGStats.gd").new()
+	
+func get_inst_weight_inventory():
+	return load("res://addons/rpg_elements/nodes/RPGWeightInventory.gd").new()
+	

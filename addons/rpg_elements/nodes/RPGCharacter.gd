@@ -24,10 +24,10 @@
 tool
 extends "RPGElement.gd"
 
-export (String) var player_name setget set_player_name, get_player_name
+export (String) var character_name setget set_character_name, get_character_name
 
-export (int) var level = 1 setget get_level
-export (int) var level_max = 30 setget get_level_max, set_level_max
+export (int) var level = 1 setget , get_level
+export (int) var level_max = 30 setget set_level_max, get_level_max
 
 # Vitalidad
 export (int) var hp = 20 setget set_hp, get_hp
@@ -39,10 +39,13 @@ export (int) var max_energy = 20 setget set_max_energy, get_max_energy
 export (int) var defense_rate = 0 setget set_defense_rate, get_defense_rate
 # TODO: Implementar escudo
 # export (int) var shield
+export (int) var attack = 1 setget set_attack, get_attack
 
 var xp = 0
 var xp_required = get_xp_required(level + 1)
 var xp_total = 0
+# XP que suelta al morir, útil para los enemigos
+var xp_drop = 0
 
 # Previene que muera más de una vez. Esto hace que el player
 # no pueda ganar/perder vida/energía cuando esta muerto.
@@ -71,6 +74,13 @@ signal no_energy
 
 func _ready():
 	# Señales si esta en modo debug
+	connect_debug_signals()
+#		connect("", self, "_on_")
+
+# Métodos Públicos
+#
+
+func connect_debug_signals():
 	if debug:
 		connect("level_up", self, "_on_level_up")
 		connect("add_xp", self, "_on_add_xp")
@@ -83,18 +93,12 @@ func _ready():
 		connect("remove_energy", self, "_on_remove_energy")
 		connect("full_energy", self, "_on_full_energy")
 		connect("no_energy", self, "_on_no_energy")
-#		connect("", self, "_on_")
-
-# Métodos Públicos
-#
 
 func add_xp(amount):
 	if level >= level_max:
 		.debug("Esta en el máximo nivel, la experiencia no fue añadida")
 		return
-	
-	emit_signal("add_xp", amount)
-	
+
 	xp_total += amount
 	xp += amount
 	
@@ -105,6 +109,8 @@ func add_xp(amount):
 			level_up()
 		else:
 			break
+	
+	emit_signal("add_xp", amount)
 
 func level_up():
 	level += 1
@@ -138,6 +144,10 @@ func damage(_hp):
 
 # Ignora la defensa
 func remove_hp(_hp):
+	# Guarda el hp que se quita para luego enviarlo en 
+	# la señal remove_hp
+	var hp_deleted 
+	
 	if is_dead:
 		.debug("remove_hp(): El character esta muerto requiere ser revivido")
 		return
@@ -147,18 +157,20 @@ func remove_hp(_hp):
 		return
 	
 	if hp - _hp > 0:
-		emit_signal("remove_hp", _hp)
+		hp_deleted = _hp
 		hp -= _hp
 	else:
-		emit_signal("remove_hp", _hp - (_hp - hp))
-		
+		hp_deleted = _hp - (_hp - hp)	
 		hp = 0
 		
-		# Previene que muera más de una vez
+		# Previene que no muera más de una vez
 		if not is_dead:
+			is_dead = true
+			emit_signal("remove_hp", hp_deleted)
 			emit_signal("dead")
-		
-		is_dead = true
+			return
+	
+	emit_signal("remove_hp", hp_deleted)
 
 func revive():
 	if not is_dead:
@@ -230,11 +242,11 @@ func get_level_max():
 func set_level_max(_level_max):
 	level_max = _level_max
 
-func set_player_name(_player_name):
-	player_name = _player_name
+func set_character_name(_character_name):
+	character_name = _character_name
 	
-func get_player_name():
-	return player_name
+func get_character_name():
+	return character_name
 	
 func set_hp(_hp):
 	hp = _hp
@@ -282,6 +294,12 @@ func set_defense_rate(_defense):
 	
 func get_defense_rate():
 	return defense_rate
+
+func set_attack(_attack):
+	attack = _attack
+	
+func get_attack():
+	return attack
 
 # Métodos "Privados"
 #

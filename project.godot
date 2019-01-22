@@ -12,7 +12,7 @@ config_version=3
 
 config/name="RPGElements"
 run/main_scene="res://test_addons/rpg_elements/example_dialog/ExampleDialog.tscn"
-config/icon="res://original_images/RPGElementsFull.png"
+config/icon="res://images/RPGElementsFull.png"
 
 [editor_plugins]
 
