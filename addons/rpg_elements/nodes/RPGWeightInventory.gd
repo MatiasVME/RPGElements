@@ -1,6 +1,6 @@
 # MIT License
 #
-# Copyright (c) 2018 Matías Muñoz Espinoza
+# Copyright (c) 2018 - 2019 Matías Muñoz Espinoza
 # Copyright (c) 2018 Jovani Pérez
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -21,7 +21,9 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-extends "RPGInventory.gd"
+extends RPGInventory
+
+class_name RPGWeightInventory, "../icons/RPGWeightInventory.png"
 
 const MIN_WEIGHT_INV = 4
 
@@ -29,23 +31,22 @@ export (float) var max_weight = 20 setget set_max_weight, get_max_weight
 var current_weight = 0 setget , get_current_weight
 var inventory_full = false setget , is_full
 
-signal is_full
+signal fulled
 
 func _ready():
 	if debug:
-		connect("is_full", self, "_on_is_full")
+		connect("fulled", self, "_on_fulled")
 
 # Métodos Públicos y Setters/Getters
 #
 
-func add_item(item):
+func add_item(item : RPGItem) -> bool:
 	# Esto se deja por si el inventario esta vacio y
 	# el current_weight a cambiado.
 	if inv.size() == 0:
 		current_weight = 0
 	
 	if item == null:
-		print("item es nulo")
 		return false
 	
 	if can_add_item(item):
@@ -56,7 +57,7 @@ func add_item(item):
 		
 		if total_weight == max_weight:
 			inventory_full = true
-			emit_signal("is_full")
+			emit_signal("fulled")
 		
 		return true
 	else:
@@ -87,11 +88,10 @@ func take_item(item, amount = 1):
 		return
 
 # Borra un item devuelve si lo elimina o no
-# NEEDTEST
-func delete_item(item):
+func delete_item(item, free_item = true):
 	if inv.has(item):
 		current_weight -= item.weight * item.amount
-		return .delete_item(item)
+		return .delete_item(item, free_item)
 
 func add_max_weight(weight):
 	max_weight += weight
@@ -143,5 +143,5 @@ func stack_all_items():
 # Eventos
 #
 
-func _on_is_full():
+func _on_fulled():
 	.debug("Full Inventory: ", inv_name)

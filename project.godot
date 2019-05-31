@@ -6,7 +6,59 @@
 ;   [section] ; section goes between []
 ;   param=value ; assign values to parameters
 
-config_version=3
+config_version=4
+
+_global_script_classes=[ {
+"base": "",
+"class": "RPGCharacter",
+"language": "GDScript",
+"path": "res://addons/rpg_elements/nodes/RPGCharacter.gd"
+}, {
+"base": "",
+"class": "RPGDialog",
+"language": "GDScript",
+"path": "res://addons/rpg_elements/nodes/RPGDialog.gd"
+}, {
+"base": "Node",
+"class": "RPGElement",
+"language": "GDScript",
+"path": "res://addons/rpg_elements/nodes/RPGElement.gd"
+}, {
+"base": "",
+"class": "RPGInventory",
+"language": "GDScript",
+"path": "res://addons/rpg_elements/nodes/RPGInventory.gd"
+}, {
+"base": "",
+"class": "RPGItem",
+"language": "GDScript",
+"path": "res://addons/rpg_elements/nodes/RPGItem.gd"
+}, {
+"base": "",
+"class": "RPGStats",
+"language": "GDScript",
+"path": "res://addons/rpg_elements/nodes/RPGStats.gd"
+}, {
+"base": "",
+"class": "RPGStructure",
+"language": "GDScript",
+"path": "res://addons/rpg_elements/nodes/RPGStructure.gd"
+}, {
+"base": "RPGInventory",
+"class": "RPGWeightInventory",
+"language": "GDScript",
+"path": "res://addons/rpg_elements/nodes/RPGWeightInventory.gd"
+} ]
+_global_script_class_icons={
+"RPGCharacter": "res://addons/rpg_elements/icons/RPGCharacter.png",
+"RPGDialog": "res://addons/rpg_elements/icons/RPGDialog.png",
+"RPGElement": "",
+"RPGInventory": "res://addons/rpg_elements/icons/RPGInventory.png",
+"RPGItem": "res://addons/rpg_elements/icons/RPGItem.png",
+"RPGStats": "res://addons/rpg_elements/icons/RPGStats.png",
+"RPGStructure": "",
+"RPGWeightInventory": "res://addons/rpg_elements/icons/RPGWeightInventory.png"
+}
 
 [application]
 

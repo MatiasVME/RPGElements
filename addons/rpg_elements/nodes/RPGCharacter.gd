@@ -1,6 +1,6 @@
 # MIT License
 #
-# Copyright (c) 2018 Matías Muñoz Espinoza
+# Copyright (c) 2018 - 2019 Matías Muñoz Espinoza
 # Copyright (c) 2018 Jovani Pérez
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -21,8 +21,9 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-tool
 extends "RPGElement.gd"
+
+class_name RPGCharacter, "../icons/RPGCharacter.png"
 
 export (String) var character_name setget set_character_name, get_character_name
 
@@ -57,6 +58,8 @@ var is_dead = false
 
 signal level_up(current_level)
 signal add_xp(amount)
+# Si muere, si drop_xp > 0, entonces dropea xp
+signal drop_xp(amount)
 # El amount es la cantidad que se añadió, no siempre es la
 # cantidad enviada por medio de "add_hp(amount)"
 signal add_hp(amount)
@@ -75,7 +78,6 @@ signal no_energy
 func _ready():
 	# Señales si esta en modo debug
 	connect_debug_signals()
-#		connect("", self, "_on_")
 
 # Métodos Públicos
 #
@@ -118,6 +120,8 @@ func level_up():
 	
 	emit_signal("level_up", level)
 
+# Restaura una cantidad de hp (No supera la
+# cantidad maxima)
 func add_hp(_hp):
 	if is_dead:
 		.debug("add_hp(): El character esta muerto requiere ser revivido")
@@ -168,6 +172,9 @@ func remove_hp(_hp):
 			is_dead = true
 			emit_signal("remove_hp", hp_deleted)
 			emit_signal("dead")
+			
+			if xp_drop > 0: emit_signal("drop_xp", xp_drop)
+			
 			return
 	
 	emit_signal("remove_hp", hp_deleted)
@@ -256,7 +263,7 @@ func set_hp(_hp):
 		emit_signal("full_hp")
 	elif hp <= 0:
 		hp = 0
-		emit_signal("dead")
+		emit_signal("dead") # Es necesario?
 	
 func get_hp():
 	return hp

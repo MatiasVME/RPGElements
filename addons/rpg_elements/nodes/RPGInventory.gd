@@ -1,6 +1,6 @@
 # MIT License
 #
-# Copyright (c) 2018 Matías Muñoz Espinoza
+# Copyright (c) 2018 - 2019 Matías Muñoz Espinoza
 # Copyright (c) 2018 Jovani Pérez
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,12 +23,14 @@
 
 extends "RPGElement.gd"
 
+class_name RPGInventory, "../icons/RPGInventory.png"
+
 var inv = [] setget , get_inv
 export (String) var inv_name = "" setget set_inv_name, get_inv_name
 
-signal item_added
+signal item_added(item)
 signal item_removed
-signal item_taken
+signal item_taken(item)
 
 # Métodos Públicos y Setters/Getters
 #
@@ -40,7 +42,7 @@ func get_inv():
 func add_item(item):
 	if typeof(inv) == TYPE_ARRAY:
 		inv.append(item)
-		emit_signal("item_added")
+		emit_signal("item_added", item)
 	else:
 		.debug("Por algún motivo ", inv, " no es un array.")
 
@@ -123,24 +125,6 @@ func take_item_by_name(item_name, amount = 1):
 				pass
 	pass
 
-# Busca el item por el id y lo retorna si lo encuentra
-# retorna null si no lo encuentra. La cantidad es la
-# del item como esta apilado.
-# NEEDTEST
-func take_item_by_id(id):
-	var item
-	
-	for i in range(0, inv.size()):
-		if inv[i].get_instance_ID() == id:
-			item = inv[i]
-			remove(i)
-			break
-	
-	if item != null:
-		emit_signal("item_taken")
-	
-	return item
-
 # Retorna el primer item o pila de items que encuentra con 
 # el nombre indicado
 # NEEDTEST
@@ -165,10 +149,10 @@ func search_all_items_with_the_name(item_name):
 
 # Borra totalmente un item
 # NEEDTEST
-func delete_item(item):
+func delete_item(item, free_item = true):
 	if inv.has(item):
 		inv.erase(item)
-		item.queue_free()
+		#if free_item : item.queue_free()
 		emit_signal("item_removed")
 		return true
 		
@@ -192,10 +176,12 @@ func inv2dict():
 	
 	var i = 0
 	while i < inv.size():
-		dict_inv.append(gdc2gd(inst2dict(inv[i])))
+		dict_inv.append(gdc2gd(inst2dict(inv[i]))) # OLD
+#		dict_inv.append(inst2dict(inv[i])) # NEW
 		i += 1
-
-	var dict = gdc2gd(inst2dict(self))
+	
+	var dict = gdc2gd(inst2dict(self)) # OLD
+#	var dict = inst2dict(self) # NEW
 	dict["inv"] = dict_inv
 	
 	return dict

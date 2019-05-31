@@ -1,6 +1,6 @@
 # MIT License
 #
-# Copyright (c) 2018 Matías Muñoz Espinoza
+# Copyright (c) 2018 - 2019 Matías Muñoz Espinoza
 # Copyright (c) 2018 Jovani Pérez
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -21,8 +21,8 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-tool
 extends "RPGElement.gd"
+class_name RPGStats, "../icons/RPGStats.png"
 
 # Almacena las stats en si y los puntos relacionados con la stat, por
 # ejemplo: [["Fuerza", 3, 50], ["Inteligencia", 2, 25]].
@@ -108,3 +108,19 @@ func get_stat(stat_name):
 
 func get_stats():
 	return stats
+	
+func get_stat_names():
+	var stats_names := []
+	
+	for stat in stats:
+		stats_names.append(stat[0])
+	
+	return stats_names
+
+func get_stat_assigned_points(stat_name):
+	var stat_assigned_points : int
+	
+	for stat in stats:
+		if stat[0] == stat_name:
+			return stat[1]
+	
