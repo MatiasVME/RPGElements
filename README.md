@@ -2,7 +2,10 @@
 
 ![logo](https://github.com/MatiasVME/RPGElements/blob/master/images/RPGElementsFull.png)
 
-[Work In Progress] RPGElements es un plugin que facilita la lógica para crear juegos RPG a través de nodos personalizados
+# **Fue movido al ![Repositorio de VulcoreTeam](https://github.com/TheVulcoreTeam/RPGNodes)**
+
+[Work In Progress] RPGElements es un plugin que facilita la lógica para crear juegos RPG a través de nodos personalizados.
+
 
 ## Resumen
 
